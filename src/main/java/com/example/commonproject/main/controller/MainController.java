@@ -1,4 +1,4 @@
-package com.example.commonproject.controller;
+package com.example.commonproject.main.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainController {
 
+    /*
+     * home
+     */
     @GetMapping("/")
     public ModelAndView home(ModelAndView mav) {
         mav.setViewName("index");
