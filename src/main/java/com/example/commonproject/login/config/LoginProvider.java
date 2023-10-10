@@ -26,7 +26,7 @@ public class LoginProvider implements AuthenticationProvider {
         Collection<GrantedAuthority> authority = new ArrayList<>();
         authority.add(new SimpleGrantedAuthority("admin"));
 
-        //3. 아이디, 비밀번호가 맞는지 틀리는지 확인
+        //3. 아이디, 비밀번호가 맞는지 틀리는지 확인(db 연결 필요)
 //        if(!username.equals(PropertiesValue.username) || !password.equals(PropertiesValue.password)) {
 //            log.error("### login param error userId : {}, password : {}", username, password);
 //            throw new BadCredentialsException(username);
@@ -40,3 +40,4 @@ public class LoginProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
+}
