@@ -21,4 +21,24 @@ public class LoginController {
         return mav;
     }
 
+    /**
+     * 회원가입
+     */
+    @GetMapping("/signUp")
+    public ModelAndView signUpPage(ModelAndView mav) {
+        log.info("회원가입 페이지");
+        mav.setViewName("login/signUp");
+        return mav;
+    }
+
+    /**
+     * 패스워드 변경
+     */
+    @GetMapping("/password-update")
+    public ModelAndView passwordUpdatePage(ModelAndView mav) {
+        log.info("회원가입 페이지");
+        mav.setViewName("login/passwordUpdate");
+        return mav;
+    }
+
 }

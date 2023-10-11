@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity //웹 보안 활성화
-public class loginConfig {
+public class LoginConfig {
 
         /**
          * Securtity 설정
@@ -27,7 +27,9 @@ public class loginConfig {
             //1단계 보안 검사
             http.authorizeHttpRequests(request ->
                  request
-                     .requestMatchers("/img/**", "/css/**", "/js/**", "/v1/api/**", "/swagger-ui.html", "/")
+                     .requestMatchers(
+                             "/img/**", "/css/**", "/js/**", "/v1/api/**", "/swagger-ui.html", "/", "/common/error/**"
+                     )
                      .permitAll() //해당 경로는 보안검사 없음.
                      .anyRequest()
                      .authenticated() //나머진 모두 보안검사
