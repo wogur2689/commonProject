@@ -5,8 +5,13 @@
     <!-- header -->
     <th:block th:replace="/common/fragments/header :: headerFragment"></th:block>
 <body>
-    <th:block layout:fragment="content"></th:block>
+    <div id="main">
+        <!-- sideBar -->
+        <th:block th:replace="/common/fragments/sideBar :: sideBarFragment"></th:block>
+        <!-- content -->
+        <th:block layout:fragment="content"></th:block>
+        <!-- footer -->
+        <th:block th:replace="/common/fragments/footer :: footerFragment"></th:block>
+    </div>
 </body>
-    <!-- footer -->
-    <th:block th:replace="/common/fragments/footer :: footerFragment"></th:block>
 </html>
