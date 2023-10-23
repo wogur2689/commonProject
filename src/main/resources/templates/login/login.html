@@ -1,13 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>로그인</title>
-</head>
-<body>
-
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/common/layout/default_layout">
+<th:block layout:fragment="content">
+    <form th:action="@{/login-processing}" method="post" id="login-form">
+        <h1>로그인</h1>
+        <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/> <br />
+        <input type="password" id="password" name="password" placeholder="password"/> <br />
+        <input type="submit" id="login-button" value="로그인" />
+    </form>
+</th:block>
