@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.HashMap;
  */
 @Slf4j
 @Controller
+@RequestMapping("/payment")
 public class PaymentController {
     /**
      * (nicePay)결제 콜백
@@ -160,7 +162,7 @@ public class PaymentController {
         String cancelMsg = "고객요청";    // 취소사유
 
         /* <해쉬암호화> SHA-256 해쉬암호화는 거래 위변조를 막기위한 방법입니다. */
-        String merchantKey = "EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg=="; // 상점키
+        String merchantKey = PropertiesValue.nicePayMerchantKey; // 상점키
         String ediDate = OrderUtil.getyyyyMMddHHmmss();
         String signData = PaymentUtil.encrypt(mid + cancelAmt + ediDate + merchantKey);
 

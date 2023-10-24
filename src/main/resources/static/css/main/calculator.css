@@ -1,0 +1,19 @@
+@charset "UTF-8";
+#calculator {width: 320px; height: 500px; background: #fdffa6;}
+#header {width: 320px;height: 30px;position: relative;}
+#title {position: absolute;left: 130px;top: 3px;font-size: 20px;text-align: center;color: #000;}
+#c {position: absolute;left: 290px;top: 0;width: 30px;height: 30px;font-size: 20px;text-align: center;font-weight: bold;background-color: #d9d9d9;color: #000;}
+#window {position: absolute;left: 0;top: 30px;width: 320px;height: 120px;background-color: #fff;text-align: right;font-size: 40px;line-height: 110px;}
+#keyPad {position: absolute;left: 0;top: 150px;width: 250px;height: 280px;background: #fdffa6;}
+
+.box {display: inline-block;width: 69px;height: 69px;margin-right: 13px;margin-bottom: 20px;border: solid 1px #787878;background: #fdffa6;text-align: center;line-height: 70px;}
+
+.boxMarginInit {margin-right: 0;border-right: none;}
+
+#math {position: absolute;left: 0;top: 430px;width: 258px;height: 70px; background: #fdffa6;}
+#result {position: absolute;left: 70px;top: 0;display: inline-block;width: 179px;height: 69px;border: solid 1px #787878;background: #fdffa6;text-align: center;line-height: 70px;}
+
+#operatorPad {position: absolute;left: 250px;top: 150px;width: 69px;height: 350px;}
+
+.operatorBoxMarginInit {margin-right: 0;margin-bottom: 0;border-bottom: none;}
+.operatorBoxMarginInit:last-child {border-bottom: solid 1px #787878;}

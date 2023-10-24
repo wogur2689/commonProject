@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/common/layout/default_layout">
+<head>
+  <link rel="stylesheet" href="/css/main/calculator.css">
+</head>
+<th:block layout:fragment="content">
+  <div id="calculator">
+    <div id="header">
+      <span id="title">계산기</span>
+      <span id="c" onclick="fn_reset()">C</span>
+    </div>
+    <div id="window"></div>
+    <div id="keyPad">
+      <div class="box" onclick="fn_number('7')">7</div>
+      <div class="box" onclick="fn_number('8')">8</div>
+      <div class="box boxMarginInit" onclick="fn_number('9')">9</div>
+      <div class="box" onclick="fn_number('4')">4</div>
+      <div class="box" onclick="fn_number('5')">5</div>
+      <div class="box boxMarginInit" onclick="fn_number('6')">6</div>
+      <div class="box" onclick="fn_number('1')">1</div>
+      <div class="box" onclick="fn_number('2')">2</div>
+      <div class="box boxMarginInit" onclick="fn_number('3')">3</div>
+    </div>
+    <div id="math">
+      <div class="box boxMarginInit" onclick="fn_number('0')">0</div>
+      <div id="result" onclick="fn_cal()">=</div>
+    </div>
+    <div id="operatorPad">
+      <div class="box operatorBoxMarginInit" onclick="fn_number('+')">+</div>
+      <div class="box operatorBoxMarginInit" onclick="fn_number('-')">-</div>
+      <div class="box operatorBoxMarginInit" onclick="fn_number('*')">*</div>
+      <div class="box operatorBoxMarginInit" onclick="fn_number('/')">/</div>
+      <div class="box operatorBoxMarginInit" onclick="fn_number('%')">%</div>
+    </div>
+  </div>
+  <script src="/js/main/calculator.js"></script>
+</th:block>

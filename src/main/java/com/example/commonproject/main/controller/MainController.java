@@ -17,4 +17,13 @@ public class MainController {
         mav.setViewName("index");
         return mav;
     }
+
+    /*
+     * calculator
+     */
+    @GetMapping("/main/calculator")
+    public ModelAndView calculator(ModelAndView mav) {
+        mav.setViewName("/calculator");
+        return mav;
+    }
 }
