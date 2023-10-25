@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderDto {
+public class OrderDTO {
     private String payMethod;  // 결제수단
     private String merchantKey;// 상점 키
     private String merchantID; // 상점 id
@@ -33,7 +33,7 @@ public class OrderDto {
     private String signData;   //위변조 검증 데이터
 
     @Builder
-    public OrderDto(String payMethod, String merchantKey, String merchantID, String price, String buyerName, String buyerTel, String buyerEmail, String moid, String returnURL, String ediDate, String signData) {
+    public OrderDTO(String payMethod, String merchantKey, String merchantID, String price, String buyerName, String buyerTel, String buyerEmail, String moid, String returnURL, String ediDate, String signData) {
         this.payMethod = payMethod;
         this.merchantKey = merchantKey;
         this.merchantID = merchantID;

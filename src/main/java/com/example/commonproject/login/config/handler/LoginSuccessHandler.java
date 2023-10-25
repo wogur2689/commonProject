@@ -1,5 +1,6 @@
 package com.example.commonproject.login.config.handler;
 
+import com.example.commonproject.login.dto.LoginDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,13 +36,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
             //3. 유저 정보 세팅
-//            MainVO mainVO = MainVO.builder()
-//                    .userId(username)
-//                    .token(authority)
-//                    .build();
-//
-//            //4. 유저정보 세션에 저장 후 세션 지속시간 설정(60분)
-//            session.setAttribute("UserInfo", mainVO);
+            LoginDTO loginDTO = LoginDTO.builder()
+                    .userId(username)
+                    .token(authority)
+                    .build();
+
+            //4. 유저정보 세션에 저장 후 세션 지속시간 설정(60분)
+            session.setAttribute("UserInfo", loginDTO);
             session.setMaxInactiveInterval(3600);
         } catch (Exception e) {
             log.error("### error : {} ###", e.getMessage());

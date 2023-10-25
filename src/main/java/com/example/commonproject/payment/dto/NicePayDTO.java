@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NicePayDto {
+public class NicePayDTO {
     /*
      ****************************************************************************************
      * <인증 결과 파라미터>
@@ -27,7 +27,7 @@ public class NicePayDto {
     private String authSignature;   // Nicepay에서 내려준 응답값의 무결성 검증 Data
 
     @Builder
-    public NicePayDto(String authResultCode, String authResultMsg, String nextAppURL, String txTid, String authToken, String payMethod, String mid, String moid, String amt, String reqReserved, String netCancelURL, String authSignature) {
+    public NicePayDTO(String authResultCode, String authResultMsg, String nextAppURL, String txTid, String authToken, String payMethod, String mid, String moid, String amt, String reqReserved, String netCancelURL, String authSignature) {
         this.authResultCode = authResultCode;
         this.authResultMsg = authResultMsg;
         this.nextAppURL = nextAppURL;

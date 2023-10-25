@@ -28,11 +28,12 @@ public class LoginConfig {
             http.authorizeHttpRequests(request ->
                  request
                      .requestMatchers(
-                             "/img/**", "/css/**", "/js/**", "/v1/api/**", "/swagger-ui.html", "/", "/common/error/**"
+                            // "/img/**", "/css/**", "/js/**", "/v1/api/**", "/swagger-ui.html", "/", "/common/error/**"
+                     "/**" //개발을 위해 잠시 모두 해제
                      )
                      .permitAll() //해당 경로는 보안검사 없음.
-                     .anyRequest()
-                     .authenticated() //나머진 모두 보안검사
+//                     .anyRequest()
+//                     .authenticated() //나머진 모두 보안검사
             );
             //2단계 로그인 폼 설정
             http.formLogin(login ->
