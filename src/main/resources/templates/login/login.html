@@ -2,12 +2,20 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/common/layout/default_layout">
+      layout:decorate="~{/common/layout/default_layout}">
+<head>
+    <link th:href="@{/css/login/login.css}" rel="stylesheet">
+    <script th:href="@{/js/login/login.js}"></script>
+</head>
 <th:block layout:fragment="content">
-    <form th:action="@{/login-processing}" method="post" id="login-form">
-        <h1>로그인</h1>
-        <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/> <br />
-        <input type="password" id="password" name="password" placeholder="password"/> <br />
-        <input type="submit" id="login-button" value="로그인" />
-    </form>
+    <div class="login-page">
+        <div class="form">
+            <form class="login-form" th:action="@{/login-processing}" method="post">
+                <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/>
+                <input type="password" id="password" name="password" placeholder="password"/>
+                <button type="button" id="login-button">로그인</button>
+                <p class="message">회원이 아니신가요? <a href="#">회원가입</a></p>
+            </form>
+        </div>
+    </div>
 </th:block>

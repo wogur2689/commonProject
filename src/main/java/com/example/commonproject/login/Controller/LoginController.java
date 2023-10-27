@@ -14,9 +14,8 @@ public class LoginController {
     /**
      * 로그인
      */
-    @GetMapping("/")
+    @GetMapping
     public ModelAndView loginPage(ModelAndView mav) {
-        log.info("로그인 페이지");
         mav.setViewName("login/login");
         return mav;
     }
@@ -26,7 +25,6 @@ public class LoginController {
      */
     @GetMapping("/signUp")
     public ModelAndView signUpPage(ModelAndView mav) {
-        log.info("회원가입 페이지");
         mav.setViewName("login/signUp");
         return mav;
     }
@@ -36,7 +34,6 @@ public class LoginController {
      */
     @GetMapping("/password-update")
     public ModelAndView passwordUpdatePage(ModelAndView mav) {
-        log.info("회원가입 페이지");
         mav.setViewName("login/passwordUpdate");
         return mav;
     }

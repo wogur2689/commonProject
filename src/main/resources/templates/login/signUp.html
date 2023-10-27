@@ -2,12 +2,22 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/common/layout/default_layout">
+      layout:decorate="~{/common/layout/default_layout}">
 <th:block layout:fragment="content">
-    <form th:action="@{/login-processing}" method="post" id="login-form">
-        <h1>회원가입</h1>
-        <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/> <br />
-        <input type="password" id="password" name="password" placeholder="password"/> <br />
-        <input type="submit" id="login-button" value="로그인" />
-    </form>
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/>
+                <input type="password" placeholder="password"/>
+                <input type="text" placeholder="email address"/>
+                <button>회원가입</button>
+            </form>
+        </div>
+    </div>
+<!--    <form th:action="@{/login-processing}" method="post" id="login-form">-->
+<!--        <h1>회원가입</h1>-->
+<!--        <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/> <br />-->
+<!--        <input type="password" id="password" name="password" placeholder="password"/> <br />-->
+<!--        <input type="submit" id="login-button" value="로그인" />-->
+<!--    </form>-->
 </th:block>

@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity //웹 보안 활성화
-public class LoginConfig {
+public class SecurityConfig {
 
         /**
          * Securtity 설정

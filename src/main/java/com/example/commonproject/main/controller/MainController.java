@@ -23,7 +23,7 @@ public class MainController {
      */
     @GetMapping("/main/calculator")
     public ModelAndView calculator(ModelAndView mav) {
-        mav.setViewName("calculator");
+        mav.setViewName("main/calculator");
         return mav;
     }
 }
