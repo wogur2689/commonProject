@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/html">
     <!-- header -->
     <th:block th:replace="~{/common/fragments/header :: headerFragment}"></th:block>
 <body>
     <div id="main">
-        <!-- sideBar -->
+        <!-- sidebar -->
+        <th:block th:replace="~{/common/fragments/sideBar :: sideBarFragment}"></th:block>
         <!-- content -->
         <th:block layout:fragment="content"></th:block>
     </div>
