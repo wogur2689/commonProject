@@ -1,8 +1,10 @@
 package com.example.commonproject.common.util;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum ResponseCode {
     /**
      * api 통신 코드
@@ -26,11 +28,6 @@ public enum ResponseCode {
 
     private final String code;
     private final String msg;
-
-    ResponseCode(String code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
 
     public static String getMessage(String code) {
         if(code == null) {
