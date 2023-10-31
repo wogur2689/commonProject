@@ -8,6 +8,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @PropertySource("classpath:/application.properties")
 @PropertySource("classpath:/nicepay.properties")
+@PropertySource("classpath:/o2auth.properties")
 public class PropertiesConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

@@ -178,7 +178,7 @@ public class PaymentController {
         requestData.append("EdiDate=").append(ediDate).append("&");
         requestData.append("CharSet=").append("utf-8").append("&");
         requestData.append("SignData=").append(signData);
-        String resultJsonStr = PaymentUtil.connectToServer(requestData.toString(), "https://webapi.nicepay.co.kr/webapi/cancel_process.jsp");
+        String resultJsonStr = PaymentUtil.connectToServer(requestData.toString(), PropertiesValue.nicePayCancelURL);
 
         /* <취소 결과 파라미터 정의> */
         String ResultCode 	= ""; String ResultMsg 	= ""; String CancelAmt 	= "";
