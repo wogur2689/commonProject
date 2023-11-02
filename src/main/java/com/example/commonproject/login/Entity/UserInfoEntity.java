@@ -1,9 +1,7 @@
 package com.example.commonproject.login.Entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 기본 로그인 entity
@@ -11,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "user_info")
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserInfoEntity {
 

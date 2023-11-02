@@ -1,5 +1,6 @@
 package com.example.commonproject.login.Controller;
 
+import com.example.commonproject.common.util.ResponseCode;
 import com.example.commonproject.login.dto.SignUpDTO;
 import com.example.commonproject.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,80 @@ public class LoginRestController {
     private final LoginService loginService;
 
     /**
-     * 회원가입
+     * 아이디 중복체크
      */
-    @PostMapping("/signUp-processing")
-    public ModelAndView signUpProcess(@RequestBody SignUpDTO signUpDTO, ModelAndView mav) {
+    @PostMapping("/userId")
+    public ModelAndView userIdDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+        //추후 vaild추가
+        String code = "0000";
+
+        //db 저장
+        Long id = loginService.insertUserInfo(signUpDTO);
+
+        if(id == null) code = ResponseCode.CODE_1003.getCode();
+
+        mav.addObject("code", code);
+        mav.addObject("msg", ResponseCode.getMessage(code));
         mav.setViewName("jsonView");
         return mav;
     }
 
+    /**
+     * 닉네임 중복체크
+     */
+    @PostMapping("/nickname")
+    public ModelAndView nicknameDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+        //추후 vaild추가
+        String code = "0000";
+
+        //db 저장
+        Long id = loginService.insertUserInfo(signUpDTO);
+
+        if(id == null) code = ResponseCode.CODE_1004.getCode();
+
+        mav.addObject("code", code);
+        mav.addObject("msg", ResponseCode.getMessage(code));
+        mav.setViewName("jsonView");
+        return mav;
+    }
+
+    /**
+     * 회원가입
+     */
+    @PostMapping("/signUp-processing")
+    public ModelAndView signUpProcess(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+        //추후 vaild추가
+        String code = "0000";
+
+        //db 저장
+        Long id = loginService.insertUserInfo(signUpDTO);
+
+        if(id == null) code = ResponseCode.CODE_1006.getCode();
+
+        mav.addObject("code", code);
+        mav.addObject("msg", ResponseCode.getMessage(code));
+        mav.setViewName("jsonView");
+        return mav;
+    }
+
+    /**
+     * 패스워드 변경
+     */
+    @PostMapping("/password-change")
+    public ModelAndView passwordChange(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+        //추후 vaild추가
+        String code = "0000";
+
+        //db 저장
+        Long id = loginService.insertUserInfo(signUpDTO);
+
+        if(id == null) code = ResponseCode.CODE_1005.getCode();
+
+        mav.addObject("code", code);
+        mav.addObject("msg", ResponseCode.getMessage(code));
+        mav.setViewName("jsonView");
+        return mav;
+    }
 
     //소셜 로그인 및 그외의 api처리
     //네이버 로그인

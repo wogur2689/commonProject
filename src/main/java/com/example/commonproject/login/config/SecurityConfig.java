@@ -4,18 +4,13 @@ import com.example.commonproject.login.config.handler.LoginSuccessHandler;
 import com.example.commonproject.login.config.handler.LogoutCustomHandler;
 import com.example.commonproject.login.config.handler.LoginFailureHandler;
 import com.example.commonproject.login.service.CustomUserDetailsService;
-import com.example.commonproject.login.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -25,42 +20,50 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-        /**
-         * Securtity 설정
-         */
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    /**
+     * Securtity 설정
+     */
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             //1단계 보안 검사
-            http.authorizeHttpRequests(request ->
-                 request
-                     .requestMatchers("/**")//개발을 위해 잠시 모두 해제
-                     .permitAll() //해당 경로는 보안검사 없음.
-                     .anyRequest()
-                     .authenticated() //나머진 모두 보안검사
-            );
-            //2단계 로그인 폼 설정
-            http.formLogin(login ->
-                 login
-                      .loginPage("/login") //사용자 정의 로그인 페이지
-                      .loginProcessingUrl("/login-processing") //로그인 form action Url
-                      .defaultSuccessUrl("/") //성공시 메인페이지로 이동
-                      .usernameParameter("username") //id 파라미터
-                      .passwordParameter("password") //password 파라미터
-                      .successHandler(new LoginSuccessHandler()) //로그인 성공 핸들러
-                      .failureHandler(new LoginFailureHandler()) //로그인 실패 핸들러
-                      .permitAll() //로그인 페이지 접근 권한 승인
-            );
-            //3단계 로그아웃 설정
-            http.logout(logout ->
-                logout
-                    .deleteCookies("JSESSIONID","remember-me")
-                    .addLogoutHandler(new LogoutCustomHandler())
-                    .permitAll()
-            );
-            //4단계 인증 절차
-            http.authenticationProvider(new LoginProvider(customUserDetailsService));
-            return http.build();
-        }
+        http.authorizeHttpRequests(request ->
+            request
+                   .requestMatchers("/**")//개발을 위해 잠시 모두 해제
+                   .permitAll() //해당 경로는 보안검사 없음.
+                   .anyRequest()
+                   .authenticated() //나머진 모두 보안검사
+        );
+        //2단계 로그인 폼 설정
+        http.formLogin(login ->
+            login
+                 .loginPage("/login") //사용자 정의 로그인 페이지
+                 .loginProcessingUrl("/login-processing") //로그인 form action Url
+                 .defaultSuccessUrl("/") //성공시 메인페이지로 이동
+                 .usernameParameter("username") //id 파라미터
+                 .passwordParameter("password") //password 파라미터
+                 .successHandler(new LoginSuccessHandler()) //로그인 성공 핸들러
+                 .failureHandler(new LoginFailureHandler()) //로그인 실패 핸들러
+                 .permitAll() //로그인 페이지 접근 권한 승인
+        );
+        //3단계 로그아웃 설정
+        http.logout(logout ->
+             logout
+                   .deleteCookies("JSESSIONID","remember-me")
+                   .addLogoutHandler(new LogoutCustomHandler())
+                   .permitAll()
+        );
+        //4단계 인증 절차
+        http.authenticationProvider(new LoginProvider(customUserDetailsService, getPasswordEncoder()));
+        return http.build();
+    }
+
+    /**
+     * 패스워드 인코더
+     */
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 //        /**
 //         * 로그인 정보 UserDetail저장
