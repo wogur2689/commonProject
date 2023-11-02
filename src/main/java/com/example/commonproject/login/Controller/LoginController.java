@@ -37,5 +37,4 @@ public class LoginController {
         mav.setViewName("login/passwordUpdate");
         return mav;
     }
-
 }

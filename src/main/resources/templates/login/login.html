@@ -14,7 +14,7 @@
                 <input type="text" id="username" name="username" autofocus="autofocus" placeholder="username"/>
                 <input type="password" id="password" name="password" placeholder="password"/>
                 <button type="submit" id="login-button">로그인</button>
-                <p class="message">회원이 아니신가요? <a href="#">회원가입</a></p>
+                <p class="message">회원이 아니신가요? <a th:href="@{/login/signUp}">회원가입</a></p>
             </form>
         </div>
     </div>
