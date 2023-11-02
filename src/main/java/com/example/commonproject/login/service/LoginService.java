@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class LoginService {
-    private final LoginRepository loginRepository;
+    //private final LoginRepository loginRepository;
 
     /**
      * 유저정보 저장
      */
     public void insertUserInfo() {
-        loginRepository.save()
+//        loginRepository.save();
     }
 }

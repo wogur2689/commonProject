@@ -31,6 +31,9 @@ public class UserInfoEntity {
     @Column(name = "email")
     private String email;       //이메일
 
+    @Column(name = "nick_name")
+    private String nickName;    //닉네임
+
     @Column(name = "birth_date")
     private String birthDate;   //생년월일(yyyy-mm-dd)
 

@@ -14,7 +14,5 @@ import java.util.Collection;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LoginDTO {
     private String userId;                       //userID
-    private String password;                     //password
     private String role;                         //role
-    private Collection<GrantedAuthority> token;  //token
 }

@@ -3,7 +3,9 @@ package com.example.commonproject.login.config;
 import com.example.commonproject.login.config.handler.LoginSuccessHandler;
 import com.example.commonproject.login.config.handler.LogoutCustomHandler;
 import com.example.commonproject.login.config.handler.LoginFailureHandler;
+import com.example.commonproject.login.service.CustomUserDetailsService;
 import com.example.commonproject.login.util.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity //웹 보안 활성화
 public class SecurityConfig {
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
         /**
          * Securtity 설정
@@ -53,24 +58,24 @@ public class SecurityConfig {
                     .permitAll()
             );
             //4단계 인증 절차
-            http.authenticationProvider(new LoginProvider());
+            http.authenticationProvider(new LoginProvider(customUserDetailsService));
             return http.build();
         }
 
-        /**
-         * 로그인 정보 UserDetail저장
-         */
-        @Bean
-        public UserDetailsService userDetailsService() {
-            PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
-            UserDetails user = User.builder()
-                    .passwordEncoder(encoder::encode)
-                    .username("admin")
-                    .password("1234")
-                    .roles(Role.USER.getRole())
-                    .build();
-            return new InMemoryUserDetailsManager(user);
-        }
+//        /**
+//         * 로그인 정보 UserDetail저장
+//         */
+//        @Bean
+//        public UserDetailsService userDetailsService() {
+//            PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//
+//            UserDetails user = User.builder()
+//                    .passwordEncoder(encoder::encode)
+//                    .username("admin")
+//                    .password("1234")
+//                    .roles(Role.USER.getRole())
+//                    .build();
+//            return new InMemoryUserDetailsManager(user);
+//        }
 }
 

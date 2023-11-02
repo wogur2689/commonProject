@@ -1,6 +1,7 @@
 package com.example.commonproject.login.config.handler;
 
 import com.example.commonproject.login.dto.LoginDTO;
+import com.example.commonproject.login.util.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,16 +32,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession(false);
 
         try {
-            //2. id, 권한 추출
-            String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            String password = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
-            Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+            //2. id 추출
+            String userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            //Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
             //3. 유저 정보 세팅
             LoginDTO loginDTO = LoginDTO.builder()
-                    .userId(username)
-                    .password(password)
-                    .token(authority)
+                    .userId(userId)
+                    .role(Role.USER.getRole())
                     .build();
 
             //4. 유저정보 세션에 저장 후 세션 지속시간 설정(60분)
@@ -48,9 +47,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             session.setMaxInactiveInterval(3600);
         } catch (Exception e) {
             log.error("### error : {} ###", e.getMessage());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"시스템 에러입니다. 다시 시도해주세요.");
         }
         //로그인 성공후 메인으로 이동
-        log.info("### login success ###");
         response.sendRedirect(request.getContextPath() + "/");
     }
 }
