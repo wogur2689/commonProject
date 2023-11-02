@@ -5,6 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * 기본 로그인 dto
+ */
 @Getter
 @Builder
 @AllArgsConstructor

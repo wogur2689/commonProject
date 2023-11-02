@@ -3,6 +3,7 @@ package com.example.commonproject.login.config;
 import com.example.commonproject.login.config.handler.LoginSuccessHandler;
 import com.example.commonproject.login.config.handler.LogoutCustomHandler;
 import com.example.commonproject.login.config.handler.LoginFailureHandler;
+import com.example.commonproject.login.util.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,13 +28,10 @@ public class SecurityConfig {
             //1단계 보안 검사
             http.authorizeHttpRequests(request ->
                  request
-                     .requestMatchers(
-                            // "/img/**", "/css/**", "/js/**", "/v1/api/**", "/swagger-ui.html", "/", "/common/error/**"
-                     "/**" //개발을 위해 잠시 모두 해제
-                     )
+                     .requestMatchers("/**")//개발을 위해 잠시 모두 해제
                      .permitAll() //해당 경로는 보안검사 없음.
-//                     .anyRequest()
-//                     .authenticated() //나머진 모두 보안검사
+                     .anyRequest()
+                     .authenticated() //나머진 모두 보안검사
             );
             //2단계 로그인 폼 설정
             http.formLogin(login ->
@@ -52,6 +50,7 @@ public class SecurityConfig {
                 logout
                     .deleteCookies("JSESSIONID","remember-me")
                     .addLogoutHandler(new LogoutCustomHandler())
+                    .permitAll()
             );
             //4단계 인증 절차
             http.authenticationProvider(new LoginProvider());
@@ -69,7 +68,7 @@ public class SecurityConfig {
                     .passwordEncoder(encoder::encode)
                     .username("admin")
                     .password("1234")
-                    .roles("USER")
+                    .roles(Role.USER.getRole())
                     .build();
             return new InMemoryUserDetailsManager(user);
         }

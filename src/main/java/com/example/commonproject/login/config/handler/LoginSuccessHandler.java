@@ -33,11 +33,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         try {
             //2. id, 권한 추출
             String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            String password = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
             Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
             //3. 유저 정보 세팅
             LoginDTO loginDTO = LoginDTO.builder()
                     .userId(username)
+                    .password(password)
                     .token(authority)
                     .build();
 
