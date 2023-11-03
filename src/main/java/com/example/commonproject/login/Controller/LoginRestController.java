@@ -18,36 +18,14 @@ public class LoginRestController {
     private final LoginService loginService;
 
     /**
-     * 아이디 중복체크
+     * 아이디, 닉네임 중복체크
      */
-    @PostMapping("/userId")
-    public ModelAndView userIdDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+    @PostMapping("/duplicationIsCheck")
+    public ModelAndView userDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
-        String code = "0000";
 
-        //db 저장
-        Long id = loginService.insertUserInfo(signUpDTO);
-
-        if(id == null) code = ResponseCode.CODE_1003.getCode();
-
-        mav.addObject("code", code);
-        mav.addObject("msg", ResponseCode.getMessage(code));
-        mav.setViewName("jsonView");
-        return mav;
-    }
-
-    /**
-     * 닉네임 중복체크
-     */
-    @PostMapping("/nickname")
-    public ModelAndView nicknameDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
-        //추후 vaild추가
-        String code = "0000";
-
-        //db 저장
-        Long id = loginService.insertUserInfo(signUpDTO);
-
-        if(id == null) code = ResponseCode.CODE_1004.getCode();
+        //조회
+        String code = loginService.userInfoDuplicationIsCheck(signUpDTO);
 
         mav.addObject("code", code);
         mav.addObject("msg", ResponseCode.getMessage(code));
@@ -80,12 +58,9 @@ public class LoginRestController {
     @PostMapping("/password-change")
     public ModelAndView passwordChange(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
-        String code = "0000";
 
         //db 저장
-        Long id = loginService.insertUserInfo(signUpDTO);
-
-        if(id == null) code = ResponseCode.CODE_1005.getCode();
+        String code = loginService.updatePassword(signUpDTO);
 
         mav.addObject("code", code);
         mav.addObject("msg", ResponseCode.getMessage(code));

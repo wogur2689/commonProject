@@ -45,4 +45,10 @@ public class UserInfoEntity {
 
     @Column(name = "role")
     private String role;        //권한 (기본은 guest)
+
+
+    //닉네임 변경감지
+    public void updateNickname(String nickname){
+        this.nickName = nickname;
+    }
 }
