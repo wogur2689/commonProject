@@ -43,7 +43,7 @@ public class LoginService {
     /**
      * 유저정보 저장
      */
-    public Long insertUserInfo(SignUpDTO signUpDTO) {
+    public String insertUserInfo(SignUpDTO signUpDTO) {
         //권한 부여 및 password인코딩후 저장
         UserInfoEntity userInfoEntity = UserInfoEntity.builder()
                 .userId(signUpDTO.getUserId())
@@ -57,7 +57,12 @@ public class LoginService {
                 .role(Role.USER.getRole())
                 .build();
 
-        return loginRepository.save(userInfoEntity).getId();
+        //저장
+        Long id = loginRepository.save(userInfoEntity).getId();
+
+        if(id == null) return ResponseCode.CODE_1006.getCode();
+
+        return ResponseCode.CODE_0000.getCode();
     }
 
     /**

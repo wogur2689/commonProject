@@ -23,7 +23,6 @@ public class LoginRestController {
     @PostMapping("/duplicationIsCheck")
     public ModelAndView userDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
-
         //조회
         String code = loginService.userInfoDuplicationIsCheck(signUpDTO);
 
@@ -39,12 +38,8 @@ public class LoginRestController {
     @PostMapping("/signUp-processing")
     public ModelAndView signUpProcess(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
-        String code = "0000";
-
         //db 저장
-        Long id = loginService.insertUserInfo(signUpDTO);
-
-        if(id == null) code = ResponseCode.CODE_1006.getCode();
+        String code = loginService.insertUserInfo(signUpDTO);
 
         mav.addObject("code", code);
         mav.addObject("msg", ResponseCode.getMessage(code));

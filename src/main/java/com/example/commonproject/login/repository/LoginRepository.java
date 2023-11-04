@@ -10,6 +10,4 @@ import java.util.Optional;
 public interface LoginRepository extends JpaRepository<UserInfoEntity, Long> {
     Optional<UserInfoEntity> findByUserIdAndNickName(String userId, String nickname);
     Optional<UserInfoEntity> findByUserId(String userId);
-
-    int updateUserInfoEntityByPassword(String password);
 }

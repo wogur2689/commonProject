@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,13 +26,14 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            //1단계 보안 검사
+        //1단계 보안 검사
+        http.csrf(AbstractHttpConfigurer::disable); //csrf보호(지금은 사용안함)
         http.authorizeHttpRequests(request ->
             request
                    .requestMatchers("/**")//개발을 위해 잠시 모두 해제
                    .permitAll() //해당 경로는 보안검사 없음.
-                   .anyRequest()
-                   .authenticated() //나머진 모두 보안검사
+//                   .anyRequest()
+//                   .authenticated() //나머진 모두 보안검사
         );
         //2단계 로그인 폼 설정
         http.formLogin(login ->
