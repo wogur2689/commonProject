@@ -1,6 +1,5 @@
 package com.example.commonproject.login.dto;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter
