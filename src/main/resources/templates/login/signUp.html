@@ -4,36 +4,38 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/common/layout/default_layout}">
 <th:block layout:fragment="content">
-    <div class="form-signin w-100 mt-3 text-center">
-        <form th:action="@{/api/user/signUp-processing}" method="post">
-            <!--            <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
-            <h1 class="h3 mb-3 fw-normal">회원가입</h1>
-            <div class="form-floating mb-1 w-50">
-                <input type="text" class="w-25 py-2" id="name" name="name" autofocus="autofocus" placeholder="이름"/>
-            </div>
-            <div class="form-floating mb-1 w-50">
-                <input type="text" class="w-25 py-2" id="nickName" name="nickName" placeholder="닉네임"/>
-                <input type="text" class="w-25 py-2" id="userId" name="userId" placeholder="유저id"/>
-                <button class="btn btn-primary w-25 py-2" onclick="" type="submit">중복체크</button>
-            </div>
-            <div class="form-floating mb-1">
-                <input type="password" class="w-25 py-2" id="password" name="password" placeholder="비밀번호"/>
-            </div>
-            <div class="form-floating mb-1">
-                <input type="text" class="w-25 py-2" id="email" name="email" placeholder="이메일"/>
-            </div>
-            <div class="form-floating mb-1">
-                <input type="date" class="w-25 py-2" id="birthDate" name="birthDate" placeholder="생년월일"/>
-            </div>
-            <div class="form-floating mb-1">
-                <input type="text" class="w-25 py-2" id="phoneNumber" name="phoneNumber" placeholder="전화번호"/>
-            </div>
-            <div class="form-floating mb-1 w-25">
-                <input type="text" class="w-25 py-2" id="address" name="address" placeholder="주소"/>
-                <button class="btn btn-primary w-25 py-2" onclick="" type="submit">주소 검색</button>
-            </div>
-            <button class="btn btn-primary w-25 py-2" onclick="" type="submit">회원가입</button>
-        </form>
+    <div class="text-center p-5 ms-5">
+        <div class="form-signin mt-3 text-start">
+            <form th:action="@{/api/user/signUp-processing}" method="post">
+                <!--            <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
+                <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+                <div class="form-floating mb-2">
+                    <input type="text" class="w-auto py-2" id="name"  name="name" autofocus="autofocus" placeholder="이름"/>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="text" class="w-auto py-2" id="nickName" name="nickName" placeholder="닉네임"/>
+                    <input type="text" class="w-auto py-2" id="userId" name="userId" placeholder="유저id"/>
+                    <button class="btn btn-primary w-auto py-2" onclick="" type="submit">중복체크</button>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="password" class="w-auto py-2" id="password" name="password" placeholder="비밀번호"/>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="text" class="w-auto py-2" id="email" name="email" placeholder="이메일"/>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="date" class="w-auto py-2" id="birthDate" name="birthDate" placeholder="생년월일"/>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="text" class="w-auto py-2" id="phoneNumber" name="phoneNumber" placeholder="전화번호"/>
+                </div>
+                <div class="form-floating mb-2 ">
+                    <input type="text" class="w-auto py-2" id="address" name="address" placeholder="주소"/>
+                    <button class="btn btn-primary w-auto py-2" onclick="" type="submit">주소 검색</button>
+                </div>
+                <button class="btn btn-primary w-25 py-2" onclick="" type="submit">회원가입</button>
+            </form>
+        </div>
     </div>
     <script>
         let name, nickName, userId, password, email, birthDate, phoneNumber, address;
