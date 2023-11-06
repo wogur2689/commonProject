@@ -6,16 +6,16 @@
 <th:block layout:fragment="content">
     <div class="text-center p-5 ms-5">
         <div class="form-signin mt-3 text-start">
-            <form th:action="@{/api/user/signUp-processing}" method="post">
+            <form th:action="@{/api/user/signUp-processing}" method="post" id="signUpForm">
                 <!--            <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
                 <h1 class="h3 mb-3 fw-normal">회원가입</h1>
                 <div class="form-floating mb-2">
-                    <input type="text" class="w-auto py-2" id="name"  name="name" autofocus="autofocus" placeholder="이름"/>
+                    <input type="text" class="w-auto py-2" id="name"  name="name" autofocus placeholder="이름"/>
                 </div>
                 <div class="form-floating mb-2">
                     <input type="text" class="w-auto py-2" id="nickName" name="nickName" placeholder="닉네임"/>
                     <input type="text" class="w-auto py-2" id="userId" name="userId" placeholder="유저id"/>
-                    <button class="btn btn-primary w-auto py-2" onclick="" type="submit">중복체크</button>
+                    <button class="btn btn-primary w-auto py-2" type="button">중복체크</button>
                 </div>
                 <div class="form-floating mb-2">
                     <input type="password" class="w-auto py-2" id="password" name="password" placeholder="비밀번호"/>
@@ -31,16 +31,100 @@
                 </div>
                 <div class="form-floating mb-2 ">
                     <input type="text" class="w-auto py-2" id="address" name="address" placeholder="주소"/>
-                    <button class="btn btn-primary w-auto py-2" onclick="" type="submit">주소 검색</button>
+                    <button class="btn btn-primary w-auto py-2" type="button">주소 검색</button>
                 </div>
-                <button class="btn btn-primary w-25 py-2" onclick="" type="submit">회원가입</button>
+                <button class="btn btn-primary w-25 py-2" onclick="doSignUp()" type="button">회원가입</button>
             </form>
         </div>
     </div>
     <script>
         let name, nickName, userId, password, email, birthDate, phoneNumber, address;
 
-        //주소 검색 api
+        //중복체크
+        function fnDuplicationIsCheck() {
+            nickName = $("#nickName").val();
+            userId = $("#userId").val();
+
+            var param = {
+                "nickName" : nickName,
+                "userId" : userId
+            }
+            var request = $.ajax({
+                url: '/api/user/duplicationIsCheck'
+                , type: "POST"
+                , dataType: "json"
+                , data: param
+                , async: true
+                , contentType : "application/json; charset=UTF-8"
+            });
+            request.done(function(resultData) {
+                fnUserAlt(resultData.response.msg);
+            }).fail(function (xhr, request, status) {
+                fnUserAlt("시스템 오류입니다. 고객센터에 문의해주세요.");
+            });
+        }
+
+        //회원가입
+        //1.데이터 생성
+        function fnSignUpInputDataInit() {
+            name = $("#name").val();
+            nickName = $("#nickName").val();
+            userId = $("#userId").val();
+            password = $("#password").val();
+            email = $("#email").val();
+            birthDate = $("#birthDate").val();
+            phoneNumber = $("#phoneNumber").val();
+            address = $("#address").val();
+
+            //유효성 검사
+            if(!fnSignUpInputValid()) {
+                return;
+            }
+
+            doSignUp();
+        }
+        //2. 유효성 검사
+        function fnSignUpInputValid() {
+            if(!fnCheckEmail(email)) {
+                return false;
+            }
+            if(!fnCheckId(userId)) {
+                return false;
+            }
+            if(!fnCheckPwd(password)) {
+                return false;
+            }
+            return true;
+        }
+
+        //3. 회원가입
+        function doSignUp() {
+            const formData = $("#signUpForm").serialize();
+            console.log(formData);
+
+            var request = $.ajax({
+                url: '/api/user/signUp-processing'
+                , type: "POST"
+                , dataType: "json"
+                , data: JSON.stringify(formData)
+                , async: true
+                , contentType : "application/json; charset=UTF-8"
+            });
+            request.done(function(resultData) {
+                doSignUpCallBack(resultData);
+            }).fail(function (xhr, request, status) {
+                fnUserAlt("시스템 오류입니다. 고객센터에 문의해주세요.");
+            });
+        }
+        // 회원가입 결과
+        function doSignUpCallBack(data) {
+            if(data.response.code == "0000") {
+                fnUserAlt("회원가입이 완료되었습니다.", '', function () { fnChangePage('/login');});
+            } else {
+                fnUserAlt(data.response.msg);
+            }
+        }
+        //주소 검색 api(보류)
         function execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {

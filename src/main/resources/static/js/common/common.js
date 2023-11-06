@@ -2,19 +2,99 @@
  * 공통 js 함수
  */
 
-// <!-- 팝업 -->
-function commonAlert() {
+$(function () {
+    //tap
+    $('input[tap]').keyup(function () {
+        var max = $(this).attr("maxlength");
+        if (this.value.length >= max) {
+            $(this).next('input[tap]').focus();
+            return false;
+        }
+    });
 
+    /* input유효성 검사 - input box 마지막에 붙여주기 */
+    // 숫자만 입력받기 START	(주민등록번호..)
+    $("input[onlyNum]").on("keydown", function (event) {
+        this.pattern = "[0-9]*";
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 9 || keyID == 16 || keyID == 46 || keyID == 37 || keyID == 39)
+            return;
+        else
+            return false;
+    });
+    $("input[onlyNum]").on("keyup", function () {
+        var regex = /[^0-9]/gi;
+        var v = $(this).val();
+        if (regex.test(v)) {
+            $(this).val(v.replace(regex, ''));
+        }
+    });
+    // 숫자만 입력받기 END
+
+    // 영문/한글만 입력받기 START (NAME)
+    $("input[onlyEngHan]").on("keyup", function () {
+        var regex = /[^ㄱ-힣ㆍᆢa-zA-Z]/gi;
+        var v = $(this).val();
+        if (regex.test(v)) {
+            $(this).val(v.replace(regex, ''));
+        }
+    });
+    // 영문/한글만 입력받기 END
+
+    // 영문/숫자만 입력받기 START (ID)
+    $("input[onlyEngNum]").on("keyup", function () {
+        var regex = /[^a-zA-Z0-9]/gi;
+        var v = $(this).val();
+        if (regex.test(v)) {
+            $(this).val(v.replace(regex, ''));
+        }
+    });
+    // 영문/숫자 입력받기 END
+});
+
+/**
+ * 페이지 전환
+ * urls : 페이지 경로
+ */
+function fnChangePage(urls) {
+    // if(urls.indexOf('logout.do') > -1) {
+    //     fnUserCfmAlt("<spring:message code='login.confm.logout'/>", "", function (flag) {
+    //         if(flag) {
+    //             location.replace(urls);
+    //         }
+    //     });
+    // } else {
+        location.replace(urls);
+    //}
+}
+/**
+ * str1 문자열이 빈값일 경우 str2 리턴
+ * param	:	문자열, 치환문자열
+ * return	:	문자열
+ */
+function nvl(str1, str2) {
+
+    str1 = $.trim(str1);
+    if(str1 != '' && str1 != null && str1 != 'null' && str1 !== undefined && str1 != 'undefined') {
+        return str1;
+    }
+
+    return str2;
 }
 
-function commonPrompt() {
-
+/**
+ * 문자열 유효성 체크
+ * param	:	문자열
+ * return	:	true, false
+ */
+function fnCheckValidStr(str) {
+    var trimStr = $.trim(str);
+    if (trimStr != "" && trimStr != null && trimStr != "null" && typeof trimStr != "undefined") {
+        return true;
+    }
+    return false;
 }
-
-function commonConfirm() {
-
-}
-// <!-- 팝업 -->
 
 // api
 /**
@@ -31,11 +111,6 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
     if(nvl(urls, '') == '') return;
     // 기본은 비동기 방식
     var isAsync = true;
-    var paymentPage = false;
-    if(pay) {
-            //결제완료 페이지면 true
-            paymentPage = true;
-    }
     // isSync 타입이 boolean 값일 경우 처리
     if (typeof isSync == 'boolean') {
         isAsync = isSync;
@@ -73,9 +148,9 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
         , contentType : contentTypeNm
     });
     request.done(function(resultData) {
-        if(nvl(targetObj, '') != '' && typeof targetObj == 'object') {
-            fnCreatePaging(resultData, targetObj);
-        }
+        // if(nvl(targetObj, '') != '' && typeof targetObj == 'object') {
+        //     fnCreatePaging(resultData, targetObj);
+        // }
         if (nvl(succMessage, '') != '') {
             fnUserAlt(succMessage);
         }
@@ -85,13 +160,13 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
             rtnData = resultData;
         }
     }).fail(function(xhr, request, status) {
-        hideLoadingBar();
-        appendLoadingbar();
+        // hideLoadingBar();
+        // appendLoadingbar();
         var str = xhr.responseText;
         console.log(xhr);
         if (xhr.status == "401") {
-            fnUserAlt("<spring:message code='script.author.fail' />", "", function() {
-                location.href = "/serLogout.do";
+            fnUserAlt("로그인 해주세요.", "", function() {
+                location.href = "/login";
             });
         } else if (xhr.status == "403") {
 //        fnUserAlt("<spring:message code='script.session.fail' />", "", function() {
@@ -99,7 +174,7 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
 //       });
         } else if (xhr.status == "404") {
             fnUserAlt("<spring:message code='script.fail.not.found' />", "", function() {
-                location.href = "/serLogout.do";
+                location.href = "/login";
             });
         } else if(nvl(failMessage, '') != '') {
             fnUserAlt(failMessage);
@@ -206,4 +281,120 @@ function commonGetAjax(urls, param, isSync, targetObj, functionToCallBack , succ
     if(!isAsync && typeof functionToCallBack != 'function') {
         return rtnData;
     }
+}
+
+
+/***
+ * 사용자 확인얼럿
+ */
+function fnUserCfmAlt(msg, title, callback) {
+
+    var innerTitle = "";
+    var titleClass = "";
+
+    if (nvl(title, '') != '') {
+        innerTitle = title;
+    } else {
+        titleClass = "no_title";
+    }
+
+    var today 			= Math.floor(+ new Date() / 1000);
+    var confirmId		= "confirmModal_" + today;
+    var closeId			= "confirmModal_close_" + today;
+    var confirm 		= confirmId + "_Confirm";
+    var close 			= confirmId + "_Close";
+
+    var html = "";
+    html += "<div id='" + confirmId + "' class='modal' style='position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.5); z-index:9999;'>";
+    html += "<div id='' class='common-popup' style='z-index:9999;'>";
+    html += 	" <div class='scroll'>";
+
+    html += 		"<p>" + msg + "</p>";
+    html += 		"<div class='common-popup-btn'>";
+    html += 			"<button class='white' type='button' id='" + close + "'>취소</button>";
+    html += 			"<button class='mint' type='button' id='" + confirm + "'>확인</button>";
+    html += 		"</div>";
+    html += 	"</div>";
+    html += "</div>";
+    html += "</div>";
+
+    $("body").append(html);
+
+    $("body").css({overflow:'hidden'}).bind('touchmove', function(e){e.preventDefault()});
+    $("#" + confirmId).show();
+
+    $('#' + close).off().on('click', function() {
+        $("body").css({overflow:'scroll'}).unbind('touchmove');
+        $("#" + confirmId).hide();
+        $("#" + confirmId).remove();
+        callback(false);
+    });
+
+    $('#' + confirm).off().on('click', function() {
+        $("body").css({overflow:'scroll'}).unbind('touchmove');
+        $("#" + confirmId).hide();
+        $("#" + confirmId).remove();
+        callback(true);
+    });
+
+    $('#' + closeId).off().on('click', function() {
+        $("body").css({overflow:'scroll'}).unbind('touchmove');
+        $("#" + confirmId).hide();
+        $("#" + confirmId).remove();
+    });
+}
+
+/***
+ * 사용자 얼럿
+ */
+function fnUserAlt(msg, title, callback) {
+
+    var innerTitle = "";
+    var titleClass = "";
+
+    if (nvl(title, '') != '') {
+        innerTitle = title;
+    } else {
+        titleClass = "no_title";
+    }
+
+    var today 			= Math.floor(+ new Date() / 1000);
+    var alertId			= "alertModal_" + today;
+    var closeId			= "alertModal_close_" + today;
+    var confirm 		= alertId + "_Confirm";
+
+    var html = "";
+    html += "<div id='" + alertId + "' class='popup-bg' style='z-index:9999;'>";
+    html += "<div id='' class='common-popup'>";
+    html += 	" <div class='scroll'>";
+    html += 		"<p>" + msg + "</p>";
+    html += 	"</div>";
+    html += 	"<div class='common-popup-btn'>";
+    html += 		"<button class='mint' type='button' id='" + confirm + "'>확인</button>";
+    html += 	"</div>";
+    html += "</div>";
+    html += "</div>";
+
+    $("body").append(html);
+
+    $("body").css({overflow:'hidden'}).bind('touchmove', function(e){e.preventDefault()});
+    $("#" + alertId).show();
+
+    $('#' + confirm).off().on('click', function() {
+        $("body").css({overflow:'scroll'}).unbind('touchmove');
+        $("#" + alertId).hide();
+        $("#" + alertId).remove();
+        if (typeof callback == 'function') {
+            callback();
+        }
+    });
+
+    $('#' + closeId).off().on('click', function() {
+        $("body").css({overflow:'scroll'}).unbind('touchmove');
+        $("#" + alertId).hide();
+        $("#" + alertId).remove();
+        if (typeof callback == 'function') {
+            callback();
+        }
+    });
 }

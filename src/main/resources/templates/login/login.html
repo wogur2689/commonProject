@@ -8,18 +8,34 @@
 </head>
 <th:block layout:fragment="content">
     <div class="form-signin w-100 mt-3 text-center">
-        <form th:action="@{/login-processing}" method="post">
+        <form id="loginForm" method="post" th:action="@{/login-processing}">
 <!--            <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
             <h1 class="h3 mb-3 fw-normal">로그인</h1>
 
             <div class="form-floating">
-                <input type="text" class="w-25 py-2" id="username" name="username" autofocus="autofocus" placeholder="아이디"/>
+                <input type="text" class="w-25 py-2" id="username" name="username" autofocus placeholder="아이디"/>
             </div>
             <div class="form-floating mb-3">
                 <input type="password" class="w-25 py-2" id="password" name="password" placeholder="비밀번호"/>
             </div>
-            <button class="btn btn-primary w-25 py-2" type="submit">로그인</button>
+            <button class="btn btn-primary w-25 py-2" type="button" onclick="doLogin()">로그인</button>
             <p class="message">회원이 아니신가요? <a th:href="@{/login/signUp}">회원가입</a></p>
         </form>
     </div>
+    <script>
+        function doLogin() {
+            var userId = $("#username").val();
+            var userPw = $("#password").val();
+
+            //유효성 검사
+            if(!fnCheckId(userId)) {
+                return;
+            }
+            if(!fnCheckPwd(userPw)) {
+                return;
+            }
+
+            $("#loginForm").submit();
+        }
+    </script>
 </th:block>
