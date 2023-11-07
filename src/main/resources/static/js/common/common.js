@@ -173,7 +173,7 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
 //           location.href = "/serLogout.do";
 //       });
         } else if (xhr.status == "404") {
-            fnUserAlt("<spring:message code='script.fail.not.found' />", "", function() {
+            fnUserAlt("화면 에러입니다.", "", function() {
                 location.href = "/login";
             });
         } else if(nvl(failMessage, '') != '') {

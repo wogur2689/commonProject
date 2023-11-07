@@ -28,13 +28,15 @@ public class LoginService {
         //유저 아이디, 닉네임 조회
         Optional<UserInfoEntity> userInfoEntity = loginRepository.findByUserIdAndNickName(signUpDTO.getUserId(), signUpDTO.getNickName());
         //아이디 중복
-        if(userInfoEntity.get().getUserId().equals(signUpDTO.getUserId())) {
-            return ResponseCode.CODE_1003.getCode();
-        }
+        if(userInfoEntity.isPresent()) {
+            if (userInfoEntity.get().getUserId().equals(signUpDTO.getUserId())) {
+                return ResponseCode.CODE_1003.getCode();
+            }
 
-        //닉네임 중복
-        if(userInfoEntity.get().getNickName().equals(signUpDTO.getNickName())) {
-            return ResponseCode.CODE_1004.getCode();
+            //닉네임 중복
+            if (userInfoEntity.get().getNickName().equals(signUpDTO.getNickName())) {
+                return ResponseCode.CODE_1004.getCode();
+            }
         }
 
         return ResponseCode.CODE_0000.getCode();
