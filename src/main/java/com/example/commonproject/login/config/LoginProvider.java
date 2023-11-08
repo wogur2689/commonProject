@@ -29,13 +29,13 @@ public class LoginProvider implements AuthenticationProvider {
         //1. 입력받은 값에서 사용자 이름, 비밀번호 생성
         //log.info(authentication.getDetails().toString()); //WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=6B8D861708F03350B044E8FE743A227A]
         String username = authentication.getName(); //id
-        String password = passwordEncoder.encode(authentication.getCredentials().toString()); //password
+        String password = authentication.getCredentials().toString(); //password
 
         //2. db에서 사용자 이름, 비밀번호 가져오기
         UserDetails user = customUserDetailsService.loadUserByUsername(username);
 
         //3. 비밀번호가 맞는지 틀리는지 확인
-        if(!passwordEncoder.matches(user.getPassword(), password)) {
+        if(!passwordEncoder.matches(password, user.getPassword())) {
             log.error("### login param error userId : {}, password : {}", username, password);
             throw new BadCredentialsException("### 비밀번호가 틀렸습니다. ###");
         }
