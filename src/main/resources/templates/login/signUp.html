@@ -34,12 +34,14 @@
                 </div>
                 <div class="form-floating mb-2 ">
                     <input type="text" class="w-auto py-2" id="address" name="address" placeholder="주소"/>
-                    <button class="btn btn-primary w-auto py-2" type="button">주소 검색</button>
+                    <button class="btn btn-primary w-auto py-2" type="button" onclick="execDaumPostcode()">주소 검색</button>
                 </div>
                 <button class="btn btn-primary w-25 py-2" onclick="fnSignUpInputDataInit()" type="button">회원가입</button>
             </form>
         </div>
     </div>
+    <!-- 다음 주소검색 api -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         let name, nickName, userId, password, email, birthDate, phoneNumber, address;
 
@@ -139,7 +141,7 @@
             }
             fnUserAlt(data.msg);
         }
-        //주소 검색 api(보류)
+        //주소 검색 api
         function execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -165,36 +167,37 @@
                     }
 
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('sample4_postcode').value = data.zonecode;
-                    document.getElementById("sample4_roadAddress").value = roadAddr;
-                    document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                    //document.getElementById('sample4_postcode').value = data.zonecode;
+                    document.getElementById("address").value = roadAddr;
+                    //document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                    //넣으면 닫기
 
-                    // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                    if(roadAddr !== ''){
-                        document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                    } else {
-                        document.getElementById("sample4_extraAddress").value = '';
-                    }
-
-                    var guideTextBox = document.getElementById("guide");
-                    // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                    if(data.autoRoadAddress) {
-                        var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                        guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                        guideTextBox.style.display = 'block';
-
-                    } else if(data.autoJibunAddress) {
-                        var expJibunAddr = data.autoJibunAddress;
-                        guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                        guideTextBox.style.display = 'block';
-                    } else {
-                        guideTextBox.innerHTML = '';
-                        guideTextBox.style.display = 'none';
-                    }
+                    // // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                    // if(roadAddr !== ''){
+                    //     document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                    // } else {
+                    //     document.getElementById("sample4_extraAddress").value = '';
+                    // }
+                    //
+                    // var guideTextBox = document.getElementById("guide");
+                    // // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                    // if(data.autoRoadAddress) {
+                    //     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    //     guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    //     guideTextBox.style.display = 'block';
+                    //
+                    // } else if(data.autoJibunAddress) {
+                    //     var expJibunAddr = data.autoJibunAddress;
+                    //     guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    //     guideTextBox.style.display = 'block';
+                    // } else {
+                    //     guideTextBox.innerHTML = '';
+                    //     guideTextBox.style.display = 'none';
+                    // }
                 }
-            }).open();
+            }).open({
+                autoClose: true
+            });
         }
     </script>
-    <!-- 다음 주소검색 api -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </th:block>
