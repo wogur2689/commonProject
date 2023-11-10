@@ -138,8 +138,9 @@
         function doSignUpCallBack(data) {
             if(data.code == "0000") {
                 fnUserAlt("회원가입이 완료되었습니다.", '', function () { fnChangePage('/login');});
+            } else {
+                fnUserAlt(data.msg);
             }
-            fnUserAlt(data.msg);
         }
         //주소 검색 api
         function execDaumPostcode() {
