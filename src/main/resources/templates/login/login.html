@@ -5,6 +5,8 @@
       layout:decorate="~{/common/layout/default_layout}">
 <head>
     <script th:src="@{/js/login/login.js}"></script>
+    <!-- naver -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 </head>
 <th:block layout:fragment="content">
     <div class="form-signin w-100 mt-3 text-center">
@@ -21,8 +23,18 @@
             <button class="btn btn-primary w-25 py-2" type="button" onclick="doLogin()">로그인</button>
             <p class="message">회원이 아니신가요? <a th:href="@{/login/signUp}">회원가입</a></p>
         </form>
+        <!-- oauth login -->
+        <!-- naver -->
+        <!-- 네이버 로그인 버튼 노출 영역 -->
+        <div id="naver_id_login">
+            <button type="button" onclick="doNaverLogin()">
+                <img th:src="@{/img/naverLoginBtn.png}" alt="네이버 로그인 버튼"/>
+            </button>
+        </div>
+        <!-- //네이버 로그인 버튼 노출 영역 -->
     </div>
     <script>
+        //일반 로그인
         function doLogin() {
             var userId = $("#username").val();
             var userPw = $("#password").val();
@@ -36,6 +48,17 @@
             }
 
             $("#loginForm").submit();
+        }
+
+        //naver 로그인 <!-- 테스트 키 사용 -->
+        function doNaverLogin() {
+            var naver_id_login = new naver_id_login("jyvqXeaVOVmV", "http://127.0.0.1/naver/callback.html");
+            var state = naver_id_login.getUniqState();
+            naver_id_login.setButton("white", 2,40);
+            naver_id_login.setDomain("http://127.0.0.1");
+            naver_id_login.setState(state);
+            naver_id_login.setPopup();
+            naver_id_login.init_naver_id_login();
         }
     </script>
 </th:block>
