@@ -1,15 +1,14 @@
 package com.example.commonproject.board.controller;
 
 import com.example.commonproject.board.dto.BoardRequestDTO;
+import com.example.commonproject.board.dto.CommentReqDTO;
 import com.example.commonproject.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @RestController
@@ -48,4 +47,23 @@ public class BoardRestController {
         mav.setViewName("jsonView");
         return mav;
     }
+
+    //댓글 작성
+    @PostMapping("/addComment")
+    public String addComment(@ModelAttribute @Valid CommentReqDTO commentReqDTO, RedirectAttributes attributes) {
+        boardService.addComment(commentReqDTO);
+
+        return "redirect:/adviceboard/view/{id}";
+    }
+
+//    @PostMapping("/updateComment")
+//    public String updateComment(@ModelAttribute @Valid CommentReqDTO commentReqDTO, RedirectAttributes attributes) {
+//        Comment comment = modelMapper.map(commentReqDTO, Comment.class);
+//        AdviceBoard adviceBoard = new AdviceBoard();
+//        adviceBoard.setId(commentReqDTO.getAdviceboardId());
+//        comment.setAdviceboards(adviceBoard);
+//        commentService.updateComment(comment);
+//        attributes.addAttribute("id", comment.getAdviceboards().getId());
+//        return "redirect:/adviceboard/view/{id}";
+//    }
 }

@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponseDTO {
     private Long id;
-    private String nickName;    //유저 닉네임(작성자)
+    private String writer;    //유저 닉네임(작성자)
     private String title;       //제목
     private String content;     //컨텐츠
 
@@ -17,7 +17,7 @@ public class BoardResponseDTO {
     public static BoardResponseDTO toDto(Board board) {
         return BoardResponseDTO.builder()
                 .id(board.getId())
-                .nickName(board.getNickName())
+                .writer(board.getWriter())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .build();
