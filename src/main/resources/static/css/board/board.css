@@ -1,0 +1,22 @@
+.pagination {
+    position: sticky;
+    bottom: 0;
+    background-color: #fff; /* 원하는 배경색 설정 */
+}
+.pagination li {
+    display: inline;
+    margin: 0 5px; /* 페이지 번호 간의 간격 조정 */
+}
+
+.page-item {
+    list-style: none;
+}
+
+.form-group > div {
+    margin-right: -100px; /* 각 열 간 간격 조절 */
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}

@@ -51,6 +51,12 @@ $(function () {
         }
     });
     // 영문/숫자 입력받기 END
+
+    //드롭다운
+    $(".dropdown").onclick(() => {
+        $(".dropdown").dropdown('show');
+        }
+    )
 });
 
 /**

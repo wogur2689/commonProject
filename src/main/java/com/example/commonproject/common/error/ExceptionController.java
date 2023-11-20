@@ -18,6 +18,6 @@ public class ExceptionController {
         log.error("error occur {}",e);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(CommonResponse.error(HttpStatus.NOT_FOUND.toString(), e.getMessage()));
+                .body(CommonResponse.error("9999", HttpStatus.NOT_FOUND.toString(), e.getMessage()));
     }
 }

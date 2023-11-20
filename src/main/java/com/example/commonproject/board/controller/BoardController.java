@@ -20,7 +20,7 @@ public class BoardController {
     /**
      * 리스트 화면
      */
-    @GetMapping
+    @GetMapping("/list")
     public ModelAndView board(ModelAndView mav) {
         mav.addObject("list", boardService.boardList());
         mav.setViewName("board/list");
@@ -29,6 +29,15 @@ public class BoardController {
 
     /**
      * 게시판 작성
+     */
+    @GetMapping("/write")
+    public ModelAndView boardWrite(ModelAndView mav) {
+        mav.setViewName("board/write");
+        return mav;
+    }
+
+    /**
+     * 게시판 수정
      */
     @GetMapping("/edit")
     public ModelAndView boardEdit(ModelAndView mav) {

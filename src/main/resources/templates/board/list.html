@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/layout/default_layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/board/board.css}" type="text/css" rel="stylesheet">
 </head>
-<body>
+<th:block layout:fragment="content">
+    <div class="container pt-4 mw-100">
+        <div class="pb-1">
+<!--            전체 게시글 수: <span th:text="${list.totalElements}"></span>-->
+        </div>
 
-</body>
+        <div class="form-group d-flex mb-2">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    카테고리
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <button class="dropdown-item" onclick="selectCategory('IT')">IT</button>
+                    <button class="dropdown-item" onclick="selectCategory('디자인')">디자인</button>
+                    <button class="dropdown-item" onclick="selectCategory('이직질문')">이직질문</button>
+                    <button class="dropdown-item" onclick="selectCategory('채용공고')">채용공고</button>
+                </div>
+            </div>
+
+<!--            <form action="/board/list" method="get" class="d-flex ms-lg-3">-->
+<!--                <label for="sort" class="mr-2">정렬 : </label>-->
+<!--                <select name="sort" id="sort" class="form-control w-50 ms-lg-1">-->
+<!--                    <option value="id,desc">작성일(최신순)</option>-->
+<!--                    <option value="id,asc">작성일(오래된순)</option>-->
+<!--                    <option value="commentCount,desc">댓글(많은순)</option>-->
+<!--                    <option value="commentCount,asc">댓글(적은순)</option>-->
+<!--                    <option value="views,desc">조회수(많은순)</option>-->
+<!--                    <option value="views,asc">조회수(적은순)</option>-->
+<!--                </select>-->
+<!--                <button type="submit" class="btn btn-primary ms-lg-1">정렬 적용</button>-->
+<!--            </form>-->
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col" style="width: 110px">번호</th>
+                <th scope="col" style="width: 300px">제목</th>
+                <th scope="col" style="width: 180px">작성자</th>
+<!--                <th scope="col" style="width: 150px">작성일</th>-->
+<!--                <th scope="col" style="width: 110px">댓글수</th>-->
+<!--                <th scope="col" style="width: 110px">조회수</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:if="${list == null}">
+                현재 게시글이 없습니다.
+            </th:block>
+            <th:block th:unless="${list != null}">
+                <tr class="text-center" th:each="board : ${list}">
+                    <th scope="row">
+                        <span th:text="${board.id}"></span>
+                    </th>
+
+                    <td>
+                        <a class="post-link" th:href="@{'/board/view/' + ${board.id}}">
+                            <span th:text="${board.title}"></span>
+                        </a>
+                    </td>
+
+                    <td>
+                        <span th:text="${board.writer}"></span>
+                    </td>
+    <!--                <td>-->
+    <!--                    <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span>-->
+    <!--                </td>-->
+    <!--                <td>-->
+    <!--                    <span th:text="${board.commentCount}"></span>-->
+    <!--                </td>-->
+    <!--                <td>-->
+    <!--                    <span th:text="${board.views}"></span>-->
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+        <div class="form-group d-flex justify-content-between align-items-center">
+<!--            <form th:action="@{/board/list}" method="get">-->
+<!--                <div class="d-flex">-->
+<!--                    <select id="searchType" name="searchType">-->
+<!--                        <option value="writer">작성자</option>-->
+<!--                        <option value="title">제목</option>-->
+<!--                    </select>-->
+<!--                    <label for="searchKeyword" class="ms-lg-1">검색어 : </label>-->
+<!--                    <input type="text" id="searchKeyword" name="searchKeyword"/>-->
+<!--&lt;!&ndash;                    <input type="text" id="searchKeyword" name="searchKeyword" th:value="${searchKeyword}"/>&ndash;&gt;-->
+<!--                    <button type="submit" style="margin-left: 10px">검색</button>-->
+<!--                </div>-->
+<!--            </form>-->
+
+            <div class="col-auto" style="padding-right: 150px">
+                <a th:href="@{/board/write}" class="btn btn-primary ml-2">글쓰기</a>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <ul class="pagination">
+<!--                    <li class="page-item" th:if="${list.hasPrevious() and not list.first}"-->
+<!--                        th:classappend="${list.first? 'disabled' : ''}">-->
+<!--                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number - 1}}">이전</a>-->
+<!--                    </li>-->
+
+<!--                    <li th:each="page : ${#numbers.sequence(0, list.totalPages - 1)}"-->
+<!--                        th:classappend="${page == list.number? 'active' : ''}">-->
+<!--                        <a class="page-link" th:href="@{'/board/list?page=' + ${page}}" th:text="${page + 1}"></a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item" th:if="${list.hasNext()}" th:classappend="${list.last? 'disabled' : ''}">-->
+<!--                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number + 1}}">다음</a>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 선택한 항목을 표시하는 함수
+        function selectCategory(category) {
+            $("#dropdownMenuLink").text(category);
+        }
+    </script>
+</th:block>
 </html>

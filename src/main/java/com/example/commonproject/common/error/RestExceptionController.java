@@ -24,7 +24,7 @@ public class RestExceptionController {
         log.error("error occur {}", e);
 
         return ResponseEntity.status(e.getErrorCode().getStatus())
-                .body(CommonResponse.error(e.getErrorCode().getStatus().toString(), e.getErrorCode().getMessage()));
+                .body(CommonResponse.error("9999", e.getErrorCode().getStatus().toString(), e.getErrorCode().getMessage()));
     }
 
     //기본 Exception
@@ -35,7 +35,7 @@ public class RestExceptionController {
         //slackAlarmGenerator.sendSlackAlertErrorLog(e, request);
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(CommonResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.toString(), e.getMessage()));
+                .body(CommonResponse.error("9999", HttpStatus.INTERNAL_SERVER_ERROR.toString(), e.getMessage()));
     }
 
     //vaild
@@ -45,7 +45,7 @@ public class RestExceptionController {
 
         List<CommonResponse<Void>> errors = new ArrayList<>();
         e.getFieldErrors().stream()
-                .forEach(error -> errors.add(CommonResponse.error(error.getField(), error.getDefaultMessage())));
+                .forEach(error -> errors.add(CommonResponse.error("9999", error.getField(), error.getDefaultMessage())));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errors);
