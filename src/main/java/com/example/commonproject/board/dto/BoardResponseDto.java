@@ -7,15 +7,15 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardResponseDTO {
+public class BoardResponseDto {
     private Long id;
     private String writer;    //유저 닉네임(작성자)
     private String title;       //제목
     private String content;     //컨텐츠
 
     //entity -> dto
-    public static BoardResponseDTO toDto(Board board) {
-        return BoardResponseDTO.builder()
+    public static BoardResponseDto toDto(Board board) {
+        return BoardResponseDto.builder()
                 .id(board.getId())
                 .writer(board.getWriter())
                 .title(board.getTitle())

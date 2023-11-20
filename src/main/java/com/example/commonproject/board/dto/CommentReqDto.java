@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommentReqDTO {
+public class CommentReqDto {
 
     private Long id;
     private String firstCommentId; //첫 댓글 id
@@ -15,7 +15,7 @@ public class CommentReqDTO {
     private Long boardId;
 
     //dto -> entity
-    public Comment toEntity(CommentReqDTO commentReqDTO) {
+    public Comment toEntity(CommentReqDto commentReqDTO) {
         return Comment.builder()
                 .firstCommentId(commentReqDTO.getFirstCommentId())
                 .writer(commentReqDTO.getWriter())

@@ -1,6 +1,6 @@
 package com.example.commonproject.board.domain;
 
-import com.example.commonproject.board.dto.BoardRequestDTO;
+import com.example.commonproject.board.dto.BoardRequestDto;
 import com.example.commonproject.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +31,7 @@ public class Board extends BaseEntity {
     private String content;     //컨텐츠
 
     //변경감지(수정)
-    public void BoardUpdate(BoardRequestDTO boardRequestDTO) {
+    public void BoardUpdate(BoardRequestDto boardRequestDTO) {
         this.writer = boardRequestDTO.getWriter();
         this.title = boardRequestDTO.getTitle();
         this.content = boardRequestDTO.getContent();

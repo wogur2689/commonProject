@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardRequestDTO {
+public class BoardRequestDto {
     private Long id;
     private String writer;    //유저 닉네임(작성자)
     private String title;       //제목
     private String content;     //컨텐츠
 
     //dto -> entity
-    public Board toEntity(BoardRequestDTO boardRequestDTO) {
+    public Board toEntity(BoardRequestDto boardRequestDTO) {
         return Board.builder()
                 .writer(boardRequestDTO.getWriter())
                 .title(boardRequestDTO.getTitle())

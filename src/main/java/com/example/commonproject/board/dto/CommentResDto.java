@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommentResDTO {
+public class CommentResDto {
 
     private Long id;
     private String firstCommentId; //첫 댓글 id (2023-10-31)
@@ -16,8 +16,8 @@ public class CommentResDTO {
     private Long boardId;
 
     //entity -> dto
-    public static CommentResDTO toDto(Comment comment) {
-        return CommentResDTO.builder()
+    public static CommentResDto toDto(Comment comment) {
+        return CommentResDto.builder()
                 .id(comment.getId())
                 .firstCommentId(comment.getFirstCommentId())
                 .writer(comment.getWriter())
