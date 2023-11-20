@@ -1,7 +1,7 @@
 package com.example.commonproject.login.Controller;
 
 import com.example.commonproject.common.util.ResponseCode;
-import com.example.commonproject.login.dto.SignUpDTO;
+import com.example.commonproject.login.dto.SignUpDto;
 import com.example.commonproject.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class LoginRestController {
      * 아이디, 닉네임 중복체크
      */
     @PostMapping("/duplicationIsCheck")
-    public ModelAndView userDuplicationIsCheck(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+    public ModelAndView userDuplicationIsCheck(@RequestBody SignUpDto signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
         //조회
         String code = loginService.userInfoDuplicationIsCheck(signUpDTO);
@@ -36,7 +36,7 @@ public class LoginRestController {
      * 회원가입
      */
     @PostMapping("/signUp-processing")
-    public ModelAndView signUpProcess(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+    public ModelAndView signUpProcess(@RequestBody SignUpDto signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
         //db 저장
         String code = loginService.insertUserInfo(signUpDTO);
@@ -51,7 +51,7 @@ public class LoginRestController {
      * 패스워드 변경
      */
     @PostMapping("/password-change")
-    public ModelAndView passwordChange(@RequestBody SignUpDTO signUpDTO, BindingResult result, ModelAndView mav) {
+    public ModelAndView passwordChange(@RequestBody SignUpDto signUpDTO, BindingResult result, ModelAndView mav) {
         //추후 vaild추가
 
         //db 저장

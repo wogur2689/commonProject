@@ -1,9 +1,6 @@
 package com.example.commonproject.login.dto;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 /**
  * 기본 로그인 dto
@@ -12,7 +9,7 @@ import java.util.Collection;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoginDTO {
+public class LoginDto {
     private String userId;                       //userID
     private String role;                         //role
 }

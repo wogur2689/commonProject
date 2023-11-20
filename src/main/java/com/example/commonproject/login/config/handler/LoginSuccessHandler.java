@@ -1,6 +1,6 @@
 package com.example.commonproject.login.config.handler;
 
-import com.example.commonproject.login.dto.LoginDTO;
+import com.example.commonproject.login.dto.LoginDto;
 import com.example.commonproject.login.util.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,12 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
-import java.util.Collection;
 
 /**
  * 로그인 성공시 세션 생성
@@ -37,7 +35,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             //Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
             //3. 유저 정보 세팅
-            LoginDTO loginDTO = LoginDTO.builder()
+            LoginDto loginDTO = LoginDto.builder()
                     .userId(userId)
                     .role(Role.USER.getRole())
                     .build();

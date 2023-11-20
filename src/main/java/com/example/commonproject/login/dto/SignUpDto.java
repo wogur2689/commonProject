@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SignUpDTO {
+public class SignUpDto {
     private Long id;
     private String userId;      //아이디
     private String password;    //비밀번호

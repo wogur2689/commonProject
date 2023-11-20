@@ -2,11 +2,10 @@ package com.example.commonproject.login.service;
 
 import com.example.commonproject.common.util.ResponseCode;
 import com.example.commonproject.login.Entity.UserInfoEntity;
-import com.example.commonproject.login.dto.SignUpDTO;
+import com.example.commonproject.login.dto.SignUpDto;
 import com.example.commonproject.login.repository.LoginRepository;
 import com.example.commonproject.login.util.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class LoginService {
     /**
      * 유저 아이디 및 닉네임 중복 체크
      */
-    public String userInfoDuplicationIsCheck(SignUpDTO signUpDTO) {
+    public String userInfoDuplicationIsCheck(SignUpDto signUpDTO) {
         //유저 아이디, 닉네임 조회
         Optional<UserInfoEntity> userInfoEntity = loginRepository.findByUserIdAndNickName(signUpDTO.getUserId(), signUpDTO.getNickName());
         //아이디 중복
@@ -45,7 +44,7 @@ public class LoginService {
     /**
      * 유저정보 저장
      */
-    public String insertUserInfo(SignUpDTO signUpDTO) {
+    public String insertUserInfo(SignUpDto signUpDTO) {
         //권한 부여 및 password인코딩후 저장
         UserInfoEntity userInfoEntity = UserInfoEntity.builder()
                 .userId(signUpDTO.getUserId())
@@ -70,7 +69,7 @@ public class LoginService {
     /**
      * 패스워드 변경
      */
-    public String updatePassword(SignUpDTO signUpDTO) {
+    public String updatePassword(SignUpDto signUpDTO) {
         //유저정보 조회
         UserInfoEntity userInfoEntity = loginRepository.findByUserId(signUpDTO.getUserId())
                 .orElseThrow(() -> new UsernameNotFoundException("해당 유저는 없는 유저입니다."));
