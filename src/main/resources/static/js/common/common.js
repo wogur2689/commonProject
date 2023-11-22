@@ -121,29 +121,29 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
     if (typeof isSync == 'boolean') {
         isAsync = isSync;
     }
-    var params = param;
-    var contentTypeNm = "application/x-www-form-urlencoded";
-    // param 타입이 object일 경우 폼 Object로 판단하여 해당 폼 정보 담기
-    if(typeof param == 'object') {
-        try {
-            params = param.serialize();
-        } catch(e) {
-            // 페이징대상 폼 Object의 Paging 관련 처리
-            if (nvl(targetObj, '') != '' && typeof targetObj == 'object') {
-                param['currPageIdx'] = targetObj.find("#currPageIdx").val();
-                param['totPageCnt'] = targetObj.find("#totPageCnt").val();
-                param['pageSize'] = targetObj.find("#pageSize").val();
-            }
-            // parameter 배열이 넘어온다면
-            // Java Controller 에서 @RequestBody로 처리 할 수 있도록 ContentType JSON으로 변경
-            if (Array.isArray(param)) {
-                contentTypeNm = "application/json; charset=UTF-8";
-                params = JSON.stringify(param);
-            } else {
-                params = param;
-            }
-        }
-    }
+    var params = JSON.stringify(param);
+    //무조건 json으로만 처리도록 설정.
+    var contentTypeNm = "application/json; charset=UTF-8";
+    // // param 타입이 object일 경우 폼 Object로 판단하여 해당 폼 정보 담기
+    // if(typeof param == 'object') {
+    //     try {
+    //         params = param.serialize();
+    //     } catch(e) {
+    //         // 페이징대상 폼 Object의 Paging 관련 처리
+    //         if (nvl(targetObj, '') != '' && typeof targetObj == 'object') {
+    //             param['currPageIdx'] = targetObj.find("#currPageIdx").val();
+    //             param['totPageCnt'] = targetObj.find("#totPageCnt").val();
+    //             param['pageSize'] = targetObj.find("#pageSize").val();
+    //         }
+    //         // parameter 배열이 넘어온다면
+    //         // Java Controller 에서 @RequestBody로 처리 할 수 있도록 ContentType JSON으로 변경
+    //         if (Array.isArray(param)) {
+    //             params = JSON.stringify(param);
+    //         } else {
+    //             params = param;
+    //         }
+    //     }
+    // }
     var rtnData = '';
     var request = $.ajax({
         url: urls
@@ -166,6 +166,9 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
             rtnData = resultData;
         }
     }).fail(function(xhr, request, status) {
+        console.log("xhr : " + xhr)
+        console.log("request : " + request)
+        console.log("status : " + status)
         // hideLoadingBar();
         // appendLoadingbar();
         var str = xhr.responseText;
@@ -179,9 +182,7 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
 //           location.href = "/serLogout.do";
 //       });
         } else if (xhr.status == "404") {
-            fnUserAlt("화면 에러입니다.", "", function() {
-                location.href = "/login";
-            });
+            fnUserAlt("화면 에러입니다.");
         } else if(nvl(failMessage, '') != '') {
             fnUserAlt(failMessage);
         } else if(fnCheckValidStr(str)) {

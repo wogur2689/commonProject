@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt; //생성일
+    private LocalDateTime createdAt; //생성일email
 
     @LastModifiedDate
     @Column(name = "updated_at")
@@ -25,6 +25,6 @@ public abstract class BaseEntity {
     @Column(name = "created_by", length = 10, nullable = true)
     private String createdBy; // 작성자
 
-    @Column(name = "updated_by", length = 10, nullable = false)
+    @Column(name = "updated_by", length = 10, nullable = true)
     private String updatedBy; // 수정자
 }

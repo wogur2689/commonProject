@@ -3,6 +3,7 @@ package com.example.commonproject.board.controller;
 import com.example.commonproject.board.dto.BoardRequestDto;
 import com.example.commonproject.board.dto.CommentReqDto;
 import com.example.commonproject.board.service.BoardService;
+import com.example.commonproject.common.util.ResponseCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,8 @@ public class BoardRestController {
     @PostMapping("/create")
     public ModelAndView boardCreate(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
         mav.addObject("board", boardService.boardSave(boardRequestDTO));
+        mav.addObject("code", ResponseCode.CODE_0000.getCode());
+        mav.addObject("msg", ResponseCode.CODE_0000.getMsg());
         mav.setViewName("jsonView");
         return mav;
     }
