@@ -37,6 +37,8 @@ public class BoardRestController {
     @PostMapping("/update")
     public ModelAndView boardUpdate(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
         mav.addObject("board", boardService.boardUpdate(boardRequestDTO));
+        mav.addObject("code", ResponseCode.CODE_0000.getCode());
+        mav.addObject("msg", ResponseCode.CODE_0000.getMsg());
         mav.setViewName("jsonView");
         return mav;
     }

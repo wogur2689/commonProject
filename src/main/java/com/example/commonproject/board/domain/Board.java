@@ -27,12 +27,16 @@ public class Board extends BaseEntity {
     @Column(name = "title")
     private String title;       //제목
 
-    @Column(name = "content")
+    @Column(name = "category")
+    private String category;    //카테고리
+
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;     //컨텐츠
 
     //변경감지(수정)
     public void BoardUpdate(BoardRequestDto boardRequestDTO) {
         this.writer = boardRequestDTO.getWriter();
+        this.category = boardRequestDTO.getCategory();
         this.title = boardRequestDTO.getTitle();
         this.content = boardRequestDTO.getContent();
     }

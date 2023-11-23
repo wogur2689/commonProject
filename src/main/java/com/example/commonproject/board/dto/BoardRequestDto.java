@@ -13,6 +13,7 @@ public class BoardRequestDto {
     private Long id;
     private String writer;    //유저 닉네임(작성자)
     private String title;       //제목
+    private String category;    //카테고리
     private String content;     //컨텐츠
 
     //dto -> entity
@@ -20,6 +21,7 @@ public class BoardRequestDto {
         return Board.builder()
                 .writer(boardRequestDTO.getWriter())
                 .title(boardRequestDTO.getTitle())
+                .category(boardRequestDTO.getCategory())
                 .content(boardRequestDTO.getContent())
                 .build();
     }
