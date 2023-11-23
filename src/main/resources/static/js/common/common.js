@@ -166,13 +166,9 @@ function commonAjax(urls, param, isSync, targetObj, functionToCallBack , succMes
             rtnData = resultData;
         }
     }).fail(function(xhr, request, status) {
-        console.log("xhr : " + xhr)
-        console.log("request : " + request)
-        console.log("status : " + status)
         // hideLoadingBar();
         // appendLoadingbar();
         var str = xhr.responseText;
-        console.log(xhr);
         if (xhr.status == "401") {
             fnUserAlt("로그인 해주세요.", "", function() {
                 location.href = "/login";

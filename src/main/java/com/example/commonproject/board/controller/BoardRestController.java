@@ -47,6 +47,8 @@ public class BoardRestController {
     @PostMapping("/delete")
     public ModelAndView boardDelete(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
         boardService.boardDelete(boardRequestDTO);
+        mav.addObject("code", ResponseCode.CODE_0000.getCode());
+        mav.addObject("msg", ResponseCode.CODE_0000.getMsg());
         mav.setViewName("jsonView");
         return mav;
     }

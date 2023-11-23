@@ -56,24 +56,15 @@
 
         //게시글 생성
         function boardCreate() {
-            const title = $("#inputTitle").val();
-            const writer = $("#inputWriter").val();
-            const content = $("#inputContent").val();
-
             var param = {
-                title : title,
-                writer : writer,
-                content : content
+                title : $("#inputTitle").val(),
+                writer : $("#inputWriter").val(),
+                content : $("#inputContent").val()
             }
-
-            console.log(param);
-
             commonAjax('/api/board/create', param, false, '', boardCreateCallBack);
         }
 
         function boardCreateCallBack(data) {
-            console.log(data);
-
             if(data.code != '0000') {
                 fnUserAlt(data.msg);
             } else {

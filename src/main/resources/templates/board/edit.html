@@ -4,6 +4,74 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/common/layout/default_layout}">
 <th:block layout:fragment="content">
+    <div class="layout container pt-2">
+        <h1 class="text-center my-5">게시글 작성</h1>
+        <form class="mx-5 my-3 ps-lg-2" style="max-width: 1040px;">
+            <div class="form-group row pb-2">
+                <label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+                <div class="col-sm-8">
+                    <input type="text" required class="form-control" id="inputTitle" name="title"/>
+                </div>
+                <div class="dropdown col-sm-2">
+                    <button class="btn btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        카테고리
+                    </button>
 
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <button class="dropdown-item" onclick="selectCategory('IT')">IT</button>
+                        <button class="dropdown-item" onclick="selectCategory('디자인')">디자인</button>
+                        <button class="dropdown-item" onclick="selectCategory('이직질문')">이직질문</button>
+                        <button class="dropdown-item" onclick="selectCategory('채용공고')">채용공고</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row pb-2">
+                <label for="inputWriter" class="col-sm-2 col-form-label" ><strong>작성자</strong></label>
+                <div class="col-sm-8">
+                    <input type="text" required class="form-control w-100" id="inputWriter" name="writer"/>
+                </div>
+            </div>
+
+            <div class="form-group row pb-2">
+                <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                <div class="col-sm-10">
+                    <textarea required class="form-control w-100" id="inputContent" name="content" style="height: 200px; resize: none;"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-xl-end">
+                <div class="col-auto mr-auto"></div>
+                <div class="col-auto pt-1 pb-2">
+                    <button class="btn btn-primary" type="button" onclick="boardCreate()">글쓰기</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        // 선택한 항목을 표시하는 함수
+        function selectCategory(category) {
+            $("#dropdownMenuLink").text(category);
+        }
+
+        //게시글 생성
+        function boardCreate() {
+            var param = {
+                title : $("#inputTitle").val(),
+                writer : $("#inputWriter").val(),
+                content : $("#inputContent").val()
+            }
+
+            commonAjax('/api/board/create', param, false, '', boardCreateCallBack);
+        }
+
+        function boardCreateCallBack(data) {
+            if(data.code != '0000') {
+                fnUserAlt(data.msg);
+            } else {
+                fnUserAlt(data.msg, '', fnChangePage('/board/list'));
+            }
+        }
+    </script>
 </th:block>
 </html>
