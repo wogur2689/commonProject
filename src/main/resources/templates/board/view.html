@@ -12,6 +12,9 @@
                 <div class="col-sm-8">
                     <input type="text" required class="form-control" id="inputTitle" name="title" readonly th:value="${data.title}"/>
                 </div>
+            </div>
+
+            <div class="form-group row pb-2">
                 <label for="inputCategory" class="col-sm-2 col-form-label"><strong>카테고리</strong></label>
                 <div class="col-sm-8">
                     <input type="text" required class="form-control" id="inputCategory" name="category" readonly th:value="${data.category}"/>
@@ -35,16 +38,24 @@
             <div class="form-group row justify-content-xl-end">
                 <div class="col-auto mr-auto"></div>
                 <div class="col-auto pt-1 pb-2">
-                    <button class="btn btn-primary" type="button" onclick="boardCreate()">수정하기</button>
-                    <button class="btn btn-primary" type="button" onclick="boardCreate()">삭제하기</button>
+                    <button class="btn btn-primary" type="button" onclick="boardMoveUpdate()">수정하기</button>
+                    <button class="btn btn-primary" type="button" onclick="boardDelete()">삭제하기</button>
                 </div>
             </div>
         </form>
     </div>
-    <script>
-        //게시글 생성
+    <script th:inline="javascript">
+        let id = [[${data.id}]];
+
+        //edit 이동
+        function boardMoveUpdate() {
+            fnChangePage('/board/edit/' + id);
+        }
+
+        //게시글 삭제
         function boardDelete() {
             var param = {
+                id : id,
                 title : $("#inputTitle").val(),
                 writer : $("#inputWriter").val(),
                 content : $("#inputContent").val()
@@ -53,7 +64,7 @@
         }
 
         function boardDeleteCallBack(data) {
-            if(data.code != '0000') {
+            if(data.code !== '0000') {
                 fnUserAlt(data.msg);
             } else {
                 fnUserAlt(data.msg, '', fnChangePage('/board/list'));

@@ -39,8 +39,9 @@ public class BoardController {
     /**
      * 게시판 수정
      */
-    @GetMapping("/edit")
-    public ModelAndView boardEdit(ModelAndView mav) {
+    @GetMapping("/edit/{id}")
+    public ModelAndView boardEdit(@PathVariable Long id, ModelAndView mav) {
+        mav.addObject("data", boardService.boardView(id));
         mav.setViewName("board/edit");
         return mav;
     }
