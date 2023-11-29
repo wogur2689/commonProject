@@ -16,12 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestControllerAdvice
 public class RestExceptionController {
-    //private final SlackAlarmGenerator slackAlarmGenerator;
 
     //커스텀 Exception
     @ExceptionHandler(value = CommonException.class)
     public ResponseEntity<CommonResponse<Void>> handleCommonExceptionHandler(CommonException e) {
-        log.error("error occur {}", e);
+        log.error("error : {}", e);
 
         return ResponseEntity.status(e.getErrorCode().getStatus())
                 .body(CommonResponse.error("9999", e.getErrorCode().getStatus().toString(), e.getErrorCode().getMessage()));
@@ -30,9 +29,7 @@ public class RestExceptionController {
     //기본 Exception
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<CommonResponse<Void>> unhandledException(Exception e, HttpServletRequest request) {
-        log.error("error occur {}",e);
-
-        //slackAlarmGenerator.sendSlackAlertErrorLog(e, request);
+        log.error("error : {}",e);
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(CommonResponse.error("9999", HttpStatus.INTERNAL_SERVER_ERROR.toString(), e.getMessage()));
@@ -41,7 +38,7 @@ public class RestExceptionController {
     //vaild
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<List<CommonResponse<Void>>> argsValidHandler(MethodArgumentNotValidException e) {
-        log.error("error occur {}", e);
+        log.error("error : {}", e);
 
         List<CommonResponse<Void>> errors = new ArrayList<>();
         e.getFieldErrors().stream()

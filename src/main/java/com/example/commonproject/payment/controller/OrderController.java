@@ -1,7 +1,7 @@
 package com.example.commonproject.payment.controller;
 
 import com.example.commonproject.common.properties.PropertiesValue;
-import com.example.commonproject.payment.dto.OrderDTO;
+import com.example.commonproject.payment.dto.OrderDto;
 import com.example.commonproject.payment.util.OrderUtil;
 import com.example.commonproject.payment.util.PaymentUtil;
 import com.example.commonproject.payment.vo.OrderRequestVO;
@@ -34,7 +34,7 @@ public class OrderController {
         String signData = PaymentUtil.encrypt(ediDate + PropertiesValue.nicePayMerchantID + orderRequestVO.getPrice() + PropertiesValue.nicePayMerchantKey); //위변조 검증 데이터
 
         // 3. 데이터 주문 페이지에 내려주기
-        OrderDTO orderDto = OrderDTO.builder()
+        OrderDto orderDto = OrderDto.builder()
                 .payMethod(orderRequestVO.getPayMethod())
                 .merchantKey(PropertiesValue.nicePayMerchantKey)
                 .merchantID(PropertiesValue.nicePayMerchantID)

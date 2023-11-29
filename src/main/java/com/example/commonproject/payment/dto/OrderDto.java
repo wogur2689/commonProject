@@ -7,10 +7,7 @@ package com.example.commonproject.payment.dto;
  * java
  */
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 도메인 객체는 비즈니스 도메인에서 발생하는 개념을 나타내는 객체입니다.
@@ -18,8 +15,10 @@ import lombok.NoArgsConstructor;
  * 예를 들어, 은행 애플리케이션에서 계좌 도메인 객체는 다음과 같이 구현될 수 있습니다:
  */
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderDTO {
+public class OrderDto {
     private String payMethod;  // 결제수단
     private String merchantKey;// 상점 키
     private String merchantID; // 상점 id
@@ -31,21 +30,6 @@ public class OrderDTO {
     private String returnURL;  // 결과페이지(절대경로)
     private String ediDate;    // 요청시간
     private String signData;   //위변조 검증 데이터
-
-    @Builder
-    public OrderDTO(String payMethod, String merchantKey, String merchantID, String price, String buyerName, String buyerTel, String buyerEmail, String moid, String returnURL, String ediDate, String signData) {
-        this.payMethod = payMethod;
-        this.merchantKey = merchantKey;
-        this.merchantID = merchantID;
-        this.price = price;
-        this.buyerName = buyerName;
-        this.buyerTel = buyerTel;
-        this.buyerEmail = buyerEmail;
-        this.moid = moid;
-        this.returnURL = returnURL;
-        this.ediDate = ediDate;
-        this.signData = signData;
-    }
 
     //    String payMethod = "CARD";                      // 결제수단
 //    String merchantKey = "EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg=="; //상점 키

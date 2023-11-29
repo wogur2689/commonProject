@@ -1,13 +1,12 @@
 package com.example.commonproject.payment.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NicePayDTO {
+public class NicePayDto {
     /*
      ****************************************************************************************
      * <인증 결과 파라미터>
@@ -25,20 +24,4 @@ public class NicePayDTO {
     private String reqReserved; 	// 상점 예약필드
     private String netCancelURL; 	// 망취소 요청 URL
     private String authSignature;   // Nicepay에서 내려준 응답값의 무결성 검증 Data
-
-    @Builder
-    public NicePayDTO(String authResultCode, String authResultMsg, String nextAppURL, String txTid, String authToken, String payMethod, String mid, String moid, String amt, String reqReserved, String netCancelURL, String authSignature) {
-        this.authResultCode = authResultCode;
-        this.authResultMsg = authResultMsg;
-        this.nextAppURL = nextAppURL;
-        this.txTid = txTid;
-        this.authToken = authToken;
-        this.payMethod = payMethod;
-        this.mid = mid;
-        this.moid = moid;
-        this.amt = amt;
-        this.reqReserved = reqReserved;
-        this.netCancelURL = netCancelURL;
-        this.authSignature = authSignature;
-    }
 }

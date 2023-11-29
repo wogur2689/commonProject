@@ -2,6 +2,7 @@ package com.example.commonproject.payment.controller;
 
 import com.example.commonproject.common.properties.PropertiesValue;
 import com.example.commonproject.payment.util.OrderUtil;
+import com.example.commonproject.payment.util.PayMethod;
 import com.example.commonproject.payment.util.PaymentUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -90,7 +91,6 @@ public class PaymentController {
             boolean paySuccess = false;
             if("9999".equals(resultJsonStr)){
                 /* <망취소 요청> 승인 통신중에 Exception 발생시 망취소 처리를 권고합니다.*/
-                StringBuffer netCancelData = new StringBuffer();
                 requestData.append("&").append("NetCancel=").append("1");
                 String cancelResultJsonStr = PaymentUtil.connectToServer(requestData.toString(), netCancelURL);
 
@@ -211,4 +211,8 @@ public class PaymentController {
 
         return "payment/nicepay/cancelPage";
     }
+
+//    public static boolean processPayment(PayMethod payMethod, String resultCode) {
+//        return payMethod != null && payMethod.getResultCode().equals(resultCode);
+//    }
 }
