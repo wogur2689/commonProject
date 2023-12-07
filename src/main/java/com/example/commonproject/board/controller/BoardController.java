@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
@@ -18,11 +19,14 @@ public class BoardController {
     private final BoardService boardService;
 
     /**
-     * 리스트 화면
+     * 리스트 화면(페이징)
      */
     @GetMapping("/list")
-    public ModelAndView board(ModelAndView mav) {
-        mav.addObject("list", boardService.boardList());
+    public ModelAndView board(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size,
+            ModelAndView mav) {
+        mav.addObject("list", boardService.boardList(page, size));
         mav.setViewName("board/list");
         return mav;
     }

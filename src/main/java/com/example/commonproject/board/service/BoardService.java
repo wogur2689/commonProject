@@ -10,6 +10,9 @@ import com.example.commonproject.board.repository.BoardRepository;
 import com.example.commonproject.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,11 +35,12 @@ public class BoardService {
 
     //list
     @Transactional(readOnly = true)
-    public List<BoardResponseDto> boardList() {
-        List<Board> boardList = boardRepository.findAll();
-        return boardList.stream()
-                .map(BoardResponseDto::toDto)
-                .toList();
+    public Page<BoardResponseDto> boardList(int page, int size) {
+        //페이징
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Board> boardPage = boardRepository.findAll(pageable);
+
+        return boardPage.map(BoardResponseDto::toDto);
     }
 
     //view

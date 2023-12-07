@@ -53,7 +53,7 @@
 <!--                    현재 게시글이 없습니다.-->
 <!--                </th:block>-->
 <!--                <th:block th:unless="${list != null}">-->
-                    <tr class="text-center" th:each="board : ${list}">
+                    <tr class="text-center" th:each="board : ${list.content}">
                         <th scope="row">
                             <span th:text="${board.id}"></span>
                         </th>
@@ -101,18 +101,18 @@
         <div class="col-12 d-flex justify-content-center align-items-center">
             <div class="col-12 d-flex justify-content-center align-items-center">
                 <ul class="pagination">
-<!--                    <li class="page-item" th:if="${list.hasPrevious() and not list.first}"-->
-<!--                        th:classappend="${list.first? 'disabled' : ''}">-->
-<!--                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number - 1}}">이전</a>-->
-<!--                    </li>-->
+                    <li class="page-item" th:if="${list.hasPrevious() and not list.first}"
+                        th:classappend="${list.first? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number - 1}}">이전</a>
+                    </li>
 
-<!--                    <li th:each="page : ${#numbers.sequence(0, list.totalPages - 1)}"-->
-<!--                        th:classappend="${page == list.number? 'active' : ''}">-->
-<!--                        <a class="page-link" th:href="@{'/board/list?page=' + ${page}}" th:text="${page + 1}"></a>-->
-<!--                    </li>-->
-<!--                    <li class="page-item" th:if="${list.hasNext()}" th:classappend="${list.last? 'disabled' : ''}">-->
-<!--                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number + 1}}">다음</a>-->
-<!--                    </li>-->
+                    <li th:each="page : ${#numbers.sequence(0, list.totalPages - 1)}"
+                        th:classappend="${page == list.number? 'active' : ''}">
+                        <a class="page-link" th:href="@{'/board/list?page=' + ${page}}" th:text="${page + 1}"></a>
+                    </li>
+                    <li class="page-item" th:if="${list.hasNext()}" th:classappend="${list.last? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number + 1}}">다음</a>
+                    </li>
                 </ul>
             </div>
         </div>
