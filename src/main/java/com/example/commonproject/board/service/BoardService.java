@@ -16,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @Transactional
@@ -26,6 +24,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+    private static final int size = 5; //한 페이지당 보여질 게시글 갯수
 
     //create
     public BoardResponseDto boardSave(BoardRequestDto boardRequestDTO) {
@@ -35,7 +34,7 @@ public class BoardService {
 
     //list
     @Transactional(readOnly = true)
-    public Page<BoardResponseDto> boardList(int page, int size) {
+    public Page<BoardResponseDto> boardList(int page) {
         //페이징
         Pageable pageable = PageRequest.of(page, size);
         Page<Board> boardPage = boardRepository.findAll(pageable);

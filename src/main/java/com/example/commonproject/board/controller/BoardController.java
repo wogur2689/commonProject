@@ -24,9 +24,8 @@ public class BoardController {
     @GetMapping("/list")
     public ModelAndView board(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "5") int size,
             ModelAndView mav) {
-        mav.addObject("list", boardService.boardList(page, size));
+        mav.addObject("list", boardService.boardList(page));
         mav.setViewName("board/list");
         return mav;
     }
