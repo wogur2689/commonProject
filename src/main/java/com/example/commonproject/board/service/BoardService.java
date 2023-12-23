@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @Transactional
@@ -63,29 +65,31 @@ public class BoardService {
     }
 
     //댓글 추가
-    public CommentResDto addComment(CommentReqDto commentReqDTO) {
+    public CommentResDto createComment(CommentReqDto commentReqDTO) {
         Comment comment = commentRepository.save(commentReqDTO.toEntity(commentReqDTO));
         return CommentResDto.toDto(comment);
     }
 
-    //댓글 가져오기
-    public CommentResDto getCommentById(Long id) {
-        Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
-        return CommentResDto.toDto(comment);
+    //댓글 가져오기(페이징)
+    @Transactional(readOnly = true)
+    public Page<CommentResDto> readComment(CommentReqDto commentReqDto, int page) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Comment> comments = commentRepository.findAll(pageable);
+
+        return comments.map(CommentResDto::toDto);
     }
 
     //댓글 수정
     public CommentResDto updateComment(CommentReqDto commentReqDTO) {
         Comment comment = commentRepository.findById(commentReqDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentReqDTO.getId()));
+                .orElseThrow(() -> new RuntimeException("error "));
         //변경감지
         comment.CommentUpdate(comment.getContent());
         return CommentResDto.toDto(comment);
     }
 
     //댓글 삭제
-    public void deleteComment(Long id) {
-        commentRepository.deleteById(id);
+    public void deleteComment(CommentReqDto commentReqDTO) {
+        commentRepository.deleteById(commentReqDTO.getId());
     }
 }

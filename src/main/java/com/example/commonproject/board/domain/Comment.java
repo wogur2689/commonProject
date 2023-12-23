@@ -30,7 +30,7 @@ public class Comment extends BaseEntity {
 
     @ManyToOne
     @JsonBackReference
-    //@JoinColumn(name="board_id")
+    @JoinColumn(name="board_id")
     private Board board;
 
     //변경감지
