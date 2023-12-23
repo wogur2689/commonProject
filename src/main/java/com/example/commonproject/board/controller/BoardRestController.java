@@ -53,7 +53,7 @@ public class BoardRestController {
      */
     @PostMapping("/createComment")
     public ModelAndView createComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        boardService.addComment(commentReqDTO);
+        boardService.createComment(commentReqDTO);
         ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
         return mav;
     }
@@ -63,7 +63,7 @@ public class BoardRestController {
      */
     @PostMapping("/readComment")
     public ModelAndView readComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        mav.addObject("comment", boardService.readComment(commentReqDTO));
+        mav.addObject("comment", boardService.readComment(commentReqDTO, 10));
         ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
         return mav;
     }
