@@ -12,9 +12,9 @@ public class FTPUtil {
 
     private FTPClient client = null;
 
-    public FTPUtil() {
-        init(url, port, userId, passWd);
-    }
+//    public FTPUtil() {
+//        init(url, port, userId, passWd);
+//    }
 
     public FTPUtil(String url, int port, String userId, String password) {
         init(url, port, userId, password);
@@ -57,7 +57,7 @@ public class FTPUtil {
             log.error("[ftp - IO] 파일 타입 변경 실패");
             chk = false;
         }
-        return chk
+        return chk;
     }
 
     /**
@@ -115,6 +115,69 @@ public class FTPUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        return chk;
+    }
+
+    /**
+     * 파일 삭제
+     */
+    public boolean delete(String dir, String fileName) {
+         boolean deleteChk = true;
+         try {
+             client.deleteFile(dir + fileName);
+         } catch (IOException e) {
+             e.printStackTrace();
+             deleteChk = false;
+         }
+         return deleteChk;
+    }
+
+    /**
+     * 파일 이름 변경
+     */
+    public boolean rename(String dir, String fileName, String toFileName) {
+        boolean renameChk = true;
+        try {
+            client.cwd("/");
+            client.cwd(dir);
+            client.rename(fileName, toFileName);
+            client.cwd("/");
+        } catch (IOException e) {
+            e.printStackTrace();
+            renameChk = false;
+        }
+        return renameChk;
+    }
+
+    /**
+     * 연결 해제
+     */
+    public boolean disconnection() {
+        boolean chk = true;
+        try {
+            client.logout();
+            if(client.isConnected()) {
+                client.disconnect();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            chk = false;
+        }
+
+        return chk;
+    }
+
+    /**
+     * 폴더 생성
+     */
+    public boolean makeDirectory(String path) {
+        boolean chk = true;
+        try {
+            client.makeDirectory(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            chk = false;
         }
         return chk;
     }
