@@ -52,10 +52,10 @@
 
         //naver 로그인 <!-- 테스트 키 사용 -->
         function doNaverLogin() {
-            var naver_id_login = new naver_id_login("jyvqXeaVOVmV", "http://127.0.0.1/naver/callback.html");
+            var naver_id_login = new naver_id_login("jyvqXeaVOVmV", "http://localhost:8080/naver/callback.html");
             var state = naver_id_login.getUniqState();
             naver_id_login.setButton("white", 2,40);
-            naver_id_login.setDomain("http://127.0.0.1");
+            naver_id_login.setDomain("http://localhost:8080");
             naver_id_login.setState(state);
             naver_id_login.setPopup();
             naver_id_login.init_naver_id_login();
