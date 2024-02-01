@@ -36,7 +36,7 @@ public class BatchManager extends BaseEntity {
     @Column(name = "code")
     private String code;     //상태코드
 
-    @Column(name = "msg")
+    @Column(name = "msg", columnDefinition = "TEXT")
     private String msg;     //상태메세지
 
     //변경감지(배치 대기 및 적재)
@@ -48,7 +48,7 @@ public class BatchManager extends BaseEntity {
     }
     
     //변경감지(진행, 완료, 실패)
-    public void batchProcessingUpdate(BatchRequestDto batchRequestDto) {
+    public void batchStatusUpdate(BatchRequestDto batchRequestDto) {
         this.serviceType = batchRequestDto.getServiceType();
         this.batchStatus = batchRequestDto.getBatchStatus();
         this.code = batchRequestDto.getCode();

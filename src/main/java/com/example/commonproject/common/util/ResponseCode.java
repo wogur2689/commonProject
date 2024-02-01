@@ -30,6 +30,8 @@ public enum ResponseCode {
 
     //chat 3001 ~ 4000
 
+    //batch 4001 ~ 5000
+
     private final String code;
     private final String msg;
 
