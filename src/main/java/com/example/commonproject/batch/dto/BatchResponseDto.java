@@ -4,15 +4,13 @@ import com.example.commonproject.batch.domain.BatchLevel;
 import com.example.commonproject.batch.domain.BatchManager;
 import com.example.commonproject.batch.domain.BatchServiceType;
 import com.example.commonproject.batch.domain.BatchStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BatchRequestDto {
+public class BatchResponseDto {
     private BatchServiceType serviceType; //서비스타입
     private BatchLevel batchLevel;  //배치 중요도(상중하)
     private BatchStatus batchStatus; //상태값
@@ -20,15 +18,15 @@ public class BatchRequestDto {
     private String code;        //코드
     private String msg;         //메세지
 
-    //dto -> entity
-    public static BatchManager toEntity(BatchRequestDto batchRequestDto) {
-        return BatchManager.builder()
-                .serviceType(batchRequestDto.getServiceType())
-                .batchLevel(batchRequestDto.getBatchLevel())
-                .batchStatus(batchRequestDto.getBatchStatus())
-                .content(batchRequestDto.getContent())
-                .code(batchRequestDto.getCode())
-                .msg(batchRequestDto.getMsg())
+    //entity -> dto
+    public static BatchResponseDto toDto(BatchManager batchManager) {
+        return BatchResponseDto.builder()
+                .serviceType(batchManager.getServiceType())
+                .batchLevel(batchManager.getBatchLevel())
+                .batchStatus(batchManager.getBatchStatus())
+                .content(batchManager.getContent())
+                .code(batchManager.getCode())
+                .msg(batchManager.getMsg())
                 .build();
     }
 }
