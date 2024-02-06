@@ -16,7 +16,7 @@ public class TestBatchTask {
      * 배치(테스트)
      */
     //@Scheduled(cron = "")
-    public void run() {
+    public void batchWating() {
         log.info("### batch test start ###");
         try {
             //로직 처리

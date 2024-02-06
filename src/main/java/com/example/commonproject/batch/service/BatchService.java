@@ -2,6 +2,7 @@ package com.example.commonproject.batch.service;
 
 import com.example.commonproject.batch.domain.BatchManager;
 import com.example.commonproject.batch.dto.BatchRequestDto;
+import com.example.commonproject.batch.dto.BatchResponseDto;
 import com.example.commonproject.batch.repository.BatchManagerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,18 +20,20 @@ public class BatchService {
     private BatchManagerRepository batchManagerRepository;
 
     //배치 적재
-
-    public Long BatchInsert(BatchRequestDto batchRequestDto) {
-        BatchManager batchManager = batchRequestDto.toEntity();
-        return batchManagerRepository.save(batchManager).getId();
+    public BatchResponseDto BatchInsert(BatchRequestDto batchRequestDto) {
+        BatchManager batchManager = BatchRequestDto.toEntity(batchRequestDto);
+        batchManagerRepository.save(batchManager);
+        return BatchResponseDto.toDto(batchManager);
     }
 
     //배치 업데이트
-    public void BatchUpdate(BatchRequestDto batchRequestDto, Long id) {
+    public BatchResponseDto BatchUpdate(BatchRequestDto batchRequestDto, Long id) {
         BatchManager batchManager = batchManagerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("error "));
 
         //변경감지
         batchManager.batchStatusUpdate(batchRequestDto);
+
+        return BatchResponseDto.toDto(batchManager);
     }
 }
