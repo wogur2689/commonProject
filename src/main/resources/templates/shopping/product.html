@@ -5,17 +5,28 @@
       layout:decorate="/common/layout/default_layout">
 <th:block layout:fragment="content">
   <div>
-    <h1>상품</h1>
+    <h1>Hyeok Shopping Mall</h1>
     <hr>
+    <!--TODO 추후 관리자생성시 DB에서 읽어오기 -->
     <div>
-      <img src="" alt="상품1">
+      <img th:src="@{/img/product/meat.png}" alt="고기" class="card-img">
+      <p>맜있는 고기</p>
+      <p class="p-3 price">5,000원</p>
+      <p class="p-3 count">3개</p>
     </div>
     <div>
-      <img src="" alt="상품2">
+      <img th:src="@{/img/product/milk.jpg}" alt="우유" class="card-img">
+      <p>신선한 우유</p>
+      <p class="p-3 price">5,000원</p>
+      <p class="p-3 count">3개</p>
     </div>
     <div>
-      <img src="" alt="상품3">
+      <img th:src="@{/img/product/tomatoe.jpg}" alt="토마토" class="card-img">
+      <p>잘익은 토마토</p>
+      <p class="p-3 price">5,000원</p>
+      <p class="p-3 count">3개</p>
     </div>
+    <hr>
   </div>
 </th:block>
 </html>

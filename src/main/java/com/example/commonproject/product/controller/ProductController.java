@@ -18,6 +18,15 @@ public class ProductController {
     private final BoardService boardService;
 
     /**
+     * 쇼핑몰 메인
+     */
+    @GetMapping("/shopping")
+    public ModelAndView shopping(ModelAndView mav) {
+        mav.setViewName("shooping/product");
+        return mav;
+    }
+
+    /**
      * 상품 리스트 화면(페이징 적용)
      */
     @GetMapping("/list")
