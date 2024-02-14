@@ -50,8 +50,8 @@ public class SecurityConfig {
         //3단계 로그아웃 설정
         http.logout(logout ->
              logout
-                   .deleteCookies("JSESSIONID","remember-me")
-                   .addLogoutHandler(new LogoutCustomHandler())
+                   .deleteCookies("JSESSIONID","remember-me") //로그아웃시 쿠키 삭제
+                   .addLogoutHandler(new LogoutCustomHandler()) //로그아웃 핸들러
                    .permitAll()
         );
         //4단계 인증 절차
