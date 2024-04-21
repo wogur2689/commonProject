@@ -28,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //1단계 보안 검사
         http.csrf(AbstractHttpConfigurer::disable); //csrf보호(지금은 사용안함)
+        http.cors(AbstractHttpConfigurer::disable); //cors보호(지금은 사용안함)
         http.authorizeHttpRequests(request ->
             request
                    .requestMatchers("/**")//개발을 위해 잠시 모두 해제

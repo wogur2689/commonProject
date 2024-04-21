@@ -17,5 +17,5 @@ public class SignUpDto {
     private String birthDate;   //생년월일(yyyy-mm-dd)
     private String phoneNumber; //전화번호(010-0000-0000)
     private String address;     //주소
-    private String role;        //권한 (기본은 guest)
+    private String role;        //권한 (기본은 user)
 }

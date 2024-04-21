@@ -44,7 +44,7 @@ public class UserInfoEntity {
     private String address;     //주소
 
     @Column(name = "role")
-    private String role;        //권한 (기본은 guest)
+    private String role;        //권한 (기본은 user)
 
 
     //닉네임 변경감지

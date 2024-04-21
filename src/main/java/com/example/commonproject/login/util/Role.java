@@ -9,7 +9,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Role {
-    GUEST("guest", "손님"),
     USER("user", "유저"),
     ADMIN("admin", "관리자");
 
