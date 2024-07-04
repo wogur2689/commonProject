@@ -4,12 +4,10 @@ import com.example.commonproject.batch.domain.BatchLevel;
 import com.example.commonproject.batch.domain.BatchManager;
 import com.example.commonproject.batch.domain.BatchServiceType;
 import com.example.commonproject.batch.domain.BatchStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BatchRequestDto {
@@ -19,6 +17,15 @@ public class BatchRequestDto {
     private String content;     //작업내용
     private String code;        //코드
     private String msg;         //메세지
+
+    //update status request
+    public static BatchRequestDto batchStatusReq(BatchStatus batchStatus, String code, String msg) {
+        return BatchRequestDto.builder()
+                .batchStatus(batchStatus)
+                .code(code)
+                .msg(msg)
+                .build();
+    }
 
     //dto -> entity
     public static BatchManager toEntity(BatchRequestDto batchRequestDto) {

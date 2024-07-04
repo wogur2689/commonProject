@@ -41,7 +41,6 @@ public class BatchManager extends BaseEntity {
     
     //변경감지(진행, 완료, 실패)
     public void batchStatusUpdate(BatchRequestDto batchRequestDto) {
-        this.serviceType = batchRequestDto.getServiceType();
         this.batchStatus = batchRequestDto.getBatchStatus();
         this.code = batchRequestDto.getCode();
         this.msg = batchRequestDto.getMsg();
