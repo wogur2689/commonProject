@@ -1,5 +1,6 @@
-package com.example.commonproject.login.config;
+package com.example.commonproject.common.config;
 
+import com.example.commonproject.login.config.LoginProvider;
 import com.example.commonproject.login.config.handler.LoginSuccessHandler;
 import com.example.commonproject.login.config.handler.LogoutCustomHandler;
 import com.example.commonproject.login.config.handler.LoginFailureHandler;
