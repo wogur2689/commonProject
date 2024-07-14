@@ -10,23 +10,37 @@
     <!--TODO 추후 관리자생성시 DB에서 읽어오기 -->
     <div>
       <img th:src="@{/img/product/meat.png}" alt="고기" class="card-img">
-      <p>맜있는 고기</p>
-      <p class="p-3 price">5,000원</p>
-      <p class="p-3 count">3개</p>
+      <p id="product1" class="p-3">맜있는 고기</p>
+      <p id="price1" class="p-3">5,000원</p>
+      <p id="count1" class="p-3">3개</p>
+      <button onclick="order(1)">주문하기</button>
     </div>
     <div>
       <img th:src="@{/img/product/milk.jpg}" alt="우유" class="card-img">
-      <p>신선한 우유</p>
-      <p class="p-3 price">5,000원</p>
-      <p class="p-3 count">3개</p>
+      <p id="product2" class="p-3">신선한 우유</p>
+      <p id="price2" class="p-3">5,000원</p>
+      <p id="count2" class="p-3">3개</p>
+      <button onclick="order(2)">주문하기</button>
     </div>
     <div>
       <img th:src="@{/img/product/tomatoe.jpg}" alt="토마토" class="card-img">
-      <p>잘익은 토마토</p>
-      <p class="p-3 price">5,000원</p>
-      <p class="p-3 count">3개</p>
+      <p id="product3" class="p-3">잘익은 토마토</p>
+      <p id="price3" class="p-3">5,000원</p>
+      <p id="count3" class="p-3">3개</p>
+      <button onclick="order(3)">주문하기</button>
     </div>
     <hr>
   </div>
 </th:block>
+<script>
+
+  //주문하기
+  function order(cnt) {
+    let product = document.getElementById("product" + cnt);
+    let price = document.getElementById("price" + cnt);
+    let count = document.getElementById("count" + cnt);
+
+    fnChangePage('/payment/nicepay/orderPage');
+  }
+</script>
 </html>
