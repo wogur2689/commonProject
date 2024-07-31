@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">채팅 테스트 페이지!</h2></noscript>
+<noscript><h2 style="color: #ff0000">채팅방</h2></noscript>
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">
@@ -97,6 +97,7 @@
     }
 
     function sendName() {
+        const time = new Date();
         //채팅할 방 구독
         const roomUrl = '/sub/chat/room/' + $("#roomId").val();
         stompClient.subscribe(roomUrl, (chatDto) => {
@@ -109,12 +110,13 @@
                 'type': 'ENTER',
                 'roomId': $("#roomId").val(),
                 'sender': $("#name").val(),
-                'time': "오후 3:00"
+                'time': time.getHours() + ":" + time.getMinutes()
             })
         });
     }
 
     function sendMsg() {
+        const time = new Date();
         stompClient.publish({
             destination: "/pub/chat/sendMessage",
             body: JSON.stringify({
@@ -122,7 +124,7 @@
                 'roomId': $("#roomId").val(),
                 'sender': $("#name").val(),
                 'message': $("#message").val(),
-                'time': "오후 3:00"
+                'time': time.getHours() + ":" + time.getMinutes()
             })
         });
     }
