@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 주문
@@ -24,7 +25,7 @@ public class OrderController {
      * @return
      */
     @GetMapping("/nicepay/orderPage")
-    public String orderNicePay(OrderRequestVO orderRequestVO, Model model) {
+    public ModelAndView orderNicePay(OrderRequestVO orderRequestVO, ModelAndView mav) {
         // 1. 임시 주문번호 생성
         int seq = 20000;
         final String orderNumber = OrderUtil.makeOrderNumber(String.valueOf(seq));
@@ -49,8 +50,8 @@ public class OrderController {
                 .build();
 
         //TODO db 저장 로직 추가
-        model.addAttribute("payData", orderDto);
-
-        return "payment/nicepay/orderPage";
+        mav.addObject("payData", orderDto);
+        mav.setViewName("payment/nicepay/orderPage");
+        return mav;
     }
 }

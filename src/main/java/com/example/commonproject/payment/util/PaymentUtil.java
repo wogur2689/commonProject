@@ -1,5 +1,6 @@
 package com.example.commonproject.payment.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,28 +14,29 @@ import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Iterator;
 
+@Slf4j
 public class PaymentUtil {
-        /* nicepay */
-        // SHA-256 형식으로 암호화
-        public static String encrypt(String strData){
-            String passACL = null;
-            MessageDigest md = null;
-            try{
-                md = MessageDigest.getInstance("SHA-256");
-                md.reset();
-                md.update(strData.getBytes());
-                byte[] raw = md.digest();
-                passACL = encodeHex(raw);
-            }catch(Exception e){
-                System.out.print("암호화 에러" + e.toString());
-            }
-            return passACL;
+    /* nicepay */
+    // SHA-256 형식으로 암호화
+    public static String encrypt(String strData){
+        String passACL = null;
+        MessageDigest md = null;
+        try{
+            md = MessageDigest.getInstance("SHA-256");
+            md.reset();
+            md.update(strData.getBytes());
+            byte[] raw = md.digest();
+            passACL = encodeHex(raw);
+        }catch(Exception e) {
+            log.error("암호화 에러" + e.toString());
         }
+        return passACL;
+    }
 
-        public static String encodeHex(byte[] b){
-            char [] c = Hex.encodeHex(b);
-            return new String(c);
-        }
+    public static String encodeHex(byte[] b){
+        char [] c = Hex.encodeHex(b);
+        return new String(c);
+    }
 
     //server to server 통신
     public static String connectToServer(String data, String reqUrl) throws Exception{
@@ -100,7 +102,7 @@ public class PaymentUtil {
     }
 
     //JSON String -> HashMap 변환
-    public static HashMap jsonStringToHashMap(String str) throws Exception{
+    public static HashMap jsonStringToHashMap(String str){
         HashMap dataMap = new HashMap();
         JSONParser parser = new JSONParser();
         try{

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class PaymentController {
      * (nicePay)결제 콜백
      */
     @PostMapping("/callBackNicePay")
-    public String callBackNicePay(HttpServletRequest request, Model model) throws Exception {
+    public ModelAndView callBackNicePay(HttpServletRequest request, ModelAndView mav) throws Exception {
         //1. 인증결과 인코딩
         request.setCharacterEncoding("utf-8");
 
@@ -139,19 +140,20 @@ public class PaymentController {
 	System.out.println("인증 생성 Signature : " + authComparisonSignature);
     */
         log.info("### 결제결과 {} ###", ResultMsg);
-        model.addAttribute("code", ResultCode);
-        model.addAttribute("ResultMsg", ResultMsg);
-        model.addAttribute("PayMethod", payMethod);
-        model.addAttribute("Amt", Amt);
-        model.addAttribute("TID", TID);
-        return "payment/nicepay/payResultPage";
+        mav.addObject("code", ResultCode);
+        mav.addObject("ResultMsg", ResultMsg);
+        mav.addObject("PayMethod", payMethod);
+        mav.addObject("Amt", Amt);
+        mav.addObject("TID", TID);
+        mav.setViewName("payment/nicepay/payResultPage");
+        return mav;
     }
 
     /**
      * (nicePay)결제취소
      */
     @PostMapping("/cancelCallBackNicePay")
-    public String cancelCallBackNicePay(HttpServletRequest request, Model model) throws Exception {
+    public ModelAndView cancelCallBackNicePay(HttpServletRequest request, ModelAndView mav) throws Exception {
         request.setCharacterEncoding("utf-8");
         /* <취소요청 파라미터> */
         String tid = (String) request.getParameter("TID");    // 거래 ID
@@ -204,12 +206,12 @@ public class PaymentController {
             //cancelSignature = sha256Enc.encrypt(TID + mid + CancelAmt + merchantKey);
         }
         log.info("### 취소결과 {} ###", ResultMsg);
-        model.addAttribute("ResultMsg", ResultMsg);
-        model.addAttribute("CancelAmt", CancelAmt);
-        model.addAttribute("CancelDate", CancelDate);
-        model.addAttribute("CancelTime", CancelTime);
-
-        return "payment/nicepay/cancelPage";
+        mav.addObject("ResultMsg", ResultMsg);
+        mav.addObject("CancelAmt", CancelAmt);
+        mav.addObject("CancelDate", CancelDate);
+        mav.addObject("CancelTime", CancelTime);
+        mav.setViewName("payment/nicepay/cancelPage");
+        return mav;
     }
 
 //    public static boolean processPayment(PayMethod payMethod, String resultCode) {
