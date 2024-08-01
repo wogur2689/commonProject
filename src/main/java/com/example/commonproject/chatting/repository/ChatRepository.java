@@ -106,6 +106,22 @@ public class ChatRepository {
         return list;
     }
 
+    //채팅방에 유저가 없을 경우 채팅방 삭제(cron)
+    public void deleteChatRoom() {
+        HashOperations<String, String, ChatRoomDto> hashOperations = redisTemplate.opsForHash();
+
+        for(int i = 1000; i < 10000; i++) {
+            //1. room 정보 추출
+            ChatRoomDto room = hashOperations.get(CHAT_ROOM_KEY + i, i);
+
+            //2. 채팅방이 존재하고 사람이 없으면 채팅방 삭제
+            if (room != null && room.getUserCount() == 0L) {
+                redisTemplate.opsForHash().delete(CHAT_ROOM_KEY + i);
+                log.info("roomID : {}, 해당 채팅방은 삭제되었습니다.", i);
+            }
+        }
+    }
+
     //메세지 저장
     public void saveMsg(ChatDto chatDTO) {
         ChatRoomDto room = findRoomById(chatDTO.getRoomId());
