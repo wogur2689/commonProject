@@ -24,13 +24,14 @@ public class RestApiUtil<T> {
     /**
      * post
      */
-    public ResponseEntity<?> RestApiPostCall(URI uri, Object body, T returnEntity) {
+    public ResponseEntity<?> RestApiPostCall(URI uri, T body, T returnEntity) {
 
         RestClient restClient = RestClient.create();
 
         return restClient.post()
                 .uri(uri)
                 .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(body)
                 .retrieve()
                 .toEntity(returnEntity.getClass());
@@ -39,13 +40,14 @@ public class RestApiUtil<T> {
     /**
      * put
      */
-    public ResponseEntity<?> RestApiPutCall(URI uri, Object body, T returnEntity) {
+    public ResponseEntity<?> RestApiPutCall(URI uri, T body, T returnEntity) {
 
         RestClient restClient = RestClient.create();
 
         return restClient.put()
                 .uri(uri)
                 .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(body)
                 .retrieve()
                 .toEntity(returnEntity.getClass());
