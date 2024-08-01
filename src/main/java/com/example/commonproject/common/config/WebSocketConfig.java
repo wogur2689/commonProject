@@ -30,5 +30,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //.withSockJS(); SocketJS 를 연결한다는 설정
     }
 
-
 }

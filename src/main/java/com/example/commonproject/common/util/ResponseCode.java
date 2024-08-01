@@ -26,11 +26,19 @@ public enum ResponseCode {
     CODE_1005("1005", "비밀번호는 8~15자까지 문자, 숫자, 특수문자만 가능합니다."),
     CODE_1006("1006", "회원가입에 실패하였습니다. 다시 시도해주세요.");
 
-    //payment 2001 ~ 3000
+    //product 2001 ~ 3000
 
-    //chat 3001 ~ 4000
+    //payment 3001 ~ 4000
 
-    //batch 4001 ~ 5000
+    //chat 4001 ~ 5000
+
+    //batch 5001 ~ 6000
+
+    //ftp 6001 ~ 6500
+
+    //mail 6501 ~ 7000
+
+    //
 
     private final String code;
     private final String msg;

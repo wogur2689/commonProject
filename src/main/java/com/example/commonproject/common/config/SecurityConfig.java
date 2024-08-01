@@ -68,21 +68,5 @@ public class SecurityConfig {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//        /**
-//         * 로그인 정보 UserDetail저장
-//         */
-//        @Bean
-//        public UserDetailsService userDetailsService() {
-//            PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//
-//            UserDetails user = User.builder()
-//                    .passwordEncoder(encoder::encode)
-//                    .username("admin")
-//                    .password("1234")
-//                    .roles(Role.USER.getRole())
-//                    .build();
-//            return new InMemoryUserDetailsManager(user);
-//        }
 }
 
