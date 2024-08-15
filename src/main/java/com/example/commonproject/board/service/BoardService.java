@@ -25,7 +25,6 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final CommentRepository commentRepository;
     private static final int size = 5; //한 페이지당 보여질 게시글 갯수
 
     //create
@@ -62,34 +61,5 @@ public class BoardService {
     //delete
     public void boardDelete(BoardRequestDto boardRequestDTO) {
         boardRepository.deleteById(boardRequestDTO.getId());
-    }
-
-    //댓글 추가
-    public CommentResDto createComment(CommentReqDto commentReqDTO) {
-        Comment comment = commentRepository.save(commentReqDTO.toEntity(commentReqDTO));
-        return CommentResDto.toDto(comment);
-    }
-
-    //댓글 가져오기(페이징)
-    @Transactional(readOnly = true)
-    public Page<CommentResDto> readComment(CommentReqDto commentReqDto, int page) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Comment> comments = commentRepository.findAll(pageable);
-
-        return comments.map(CommentResDto::toDto);
-    }
-
-    //댓글 수정
-    public CommentResDto updateComment(CommentReqDto commentReqDTO) {
-        Comment comment = commentRepository.findById(commentReqDTO.getId())
-                .orElseThrow(() -> new RuntimeException("error "));
-        //변경감지
-        comment.CommentUpdate(comment.getContent());
-        return CommentResDto.toDto(comment);
-    }
-
-    //댓글 삭제
-    public void deleteComment(CommentReqDto commentReqDTO) {
-        commentRepository.deleteById(commentReqDTO.getId());
     }
 }
