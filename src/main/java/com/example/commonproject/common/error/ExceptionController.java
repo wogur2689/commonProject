@@ -13,9 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ExceptionController {
     //기본 Exception
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView unhandledException(Exception e, ModelAndView mav) {
+    public ModelAndView unhandledException(Exception e) {
         log.error("error : {}",e);
-        ModelAndViewUtil.setJsonReturn(mav, "0003");
-        return mav;
+        return ModelAndViewUtil.setJsonReturn("0003");
     }
 }

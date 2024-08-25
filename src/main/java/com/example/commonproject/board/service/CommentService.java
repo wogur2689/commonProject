@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CommentService {
 
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
     private static final int size = 5; //한 페이지당 보여질 게시글 갯수
     //댓글 추가
     public CommentResDto createComment(CommentReqDto commentReqDTO) {
@@ -28,7 +28,7 @@ public class CommentService {
 
     //댓글 가져오기(페이징)
     @Transactional(readOnly = true)
-    public Page<CommentResDto> readComment(CommentReqDto commentReqDto, int page) {
+    public Page<CommentResDto> readComment(int page) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Comment> comments = commentRepository.findAll(pageable);
 

@@ -100,18 +100,20 @@
         </div>
         <div class="col-12 d-flex justify-content-center align-items-center">
             <div class="col-12 d-flex justify-content-center align-items-center">
-                <ul class="pagination">
-                    <li class="page-item" th:if="${list.hasPrevious() and not list.first}"
-                        th:classappend="${list.first? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number - 1}}">이전</a>
+                <ul class="pagination" th:if="${list.size() > 1}">
+                    <!-- "이전" 버튼 -->
+                    <li class="page-item">
+                        <a th:if="${page > 1}" th:href="@{/list(page=${page - 1})}">이전</a>
                     </li>
 
-                    <li th:each="page : ${#numbers.sequence(0, list.totalPages - 1)}"
-                        th:classappend="${page == list.number? 'active' : ''}">
-                        <a class="page-link" th:href="@{'/board/list?page=' + ${page}}" th:text="${page + 1}"></a>
+                    <!-- 페이지 번호들 -->
+                    <li th:each="i : ${#numbers.sequence(startPage, endPage)}" class="page-item">
+                        <a class="page-link" th:href="@{/list(page=${i})}" th:text="${i}" th:classappend="${i == page} ? 'active' : ''"></a>
                     </li>
-                    <li class="page-item" th:if="${list.hasNext()}" th:classappend="${list.last? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{'/board/list?page=' + ${list.number + 1}}">다음</a>
+
+                    <!-- "다음" 버튼 -->
+                    <li class="page-item">
+                        <a th:if="${endPage < totalPages}" th:href="@{/list(page=${page + 1})}">다음</a>
                     </li>
                 </ul>
             </div>

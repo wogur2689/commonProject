@@ -24,7 +24,7 @@ public class BoardRestController {
     @PostMapping("/create")
     public ModelAndView boardCreate(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
         mav.addObject("board", boardService.boardSave(boardRequestDTO));
-        ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
+        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
         return mav;
     }
 
@@ -34,7 +34,7 @@ public class BoardRestController {
     @PostMapping("/update")
     public ModelAndView boardUpdate(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
         mav.addObject("board", boardService.boardUpdate(boardRequestDTO));
-        ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
+        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
         return mav;
     }
 
@@ -44,47 +44,7 @@ public class BoardRestController {
     @PostMapping("/delete")
     public ModelAndView boardDelete(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
         boardService.boardDelete(boardRequestDTO);
-        ModelAndViewUtil.setJsonReturn(mav,ResponseCode.CODE_0000.getCode());
-        return mav;
-    }
-
-    /**
-     * 댓글 작성
-     */
-    @PostMapping("/createComment")
-    public ModelAndView createComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        boardService.createComment(commentReqDTO);
-        ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
-        return mav;
-    }
-
-    /**
-     * 댓글 작성
-     */
-    @PostMapping("/readComment")
-    public ModelAndView readComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        mav.addObject("comment", boardService.readComment(commentReqDTO, 10));
-        ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
-        return mav;
-    }
-
-    /**
-     * 댓글 수정
-     */
-    @PostMapping("/updateComment")
-    public ModelAndView updateComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        boardService.updateComment(commentReqDTO);
-        ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
-        return mav;
-    }
-
-    /**
-     * 댓글 삭제
-     */
-    @PostMapping("/deleteComment")
-    public ModelAndView deleteComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        boardService.deleteComment(commentReqDTO);
-        ModelAndViewUtil.setJsonReturn(mav, ResponseCode.CODE_0000.getCode());
+        ModelAndViewUtil.setJsonReturn(ResponseCode.CODE_0000.getCode());
         return mav;
     }
 }
