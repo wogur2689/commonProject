@@ -22,29 +22,24 @@ public class BoardRestController {
      * 게시글 생성
      */
     @PostMapping("/create")
-    public ModelAndView boardCreate(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
-        mav.addObject("board", boardService.boardSave(boardRequestDTO));
-        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
-        return mav;
+    public ModelAndView boardCreate(@RequestBody @Valid BoardRequestDto boardRequestDTO) {
+        return ModelAndViewUtil.setJsonDataReturn( ResponseCode.CODE_0000.getCode(), "board", boardService.boardSave(boardRequestDTO));
     }
 
     /**
      * 게시글 수정
      */
     @PostMapping("/update")
-    public ModelAndView boardUpdate(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
-        mav.addObject("board", boardService.boardUpdate(boardRequestDTO));
-        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
-        return mav;
+    public ModelAndView boardUpdate(@RequestBody @Valid BoardRequestDto boardRequestDTO) {
+        return ModelAndViewUtil.setJsonDataReturn( ResponseCode.CODE_0000.getCode(), "board", boardService.boardUpdate(boardRequestDTO));
     }
 
     /**
      * 게시글 삭제
      */
     @PostMapping("/delete")
-    public ModelAndView boardDelete(@RequestBody @Valid BoardRequestDto boardRequestDTO, ModelAndView mav) {
+    public ModelAndView boardDelete(@RequestBody @Valid BoardRequestDto boardRequestDTO) {
         boardService.boardDelete(boardRequestDTO);
-        ModelAndViewUtil.setJsonReturn(ResponseCode.CODE_0000.getCode());
-        return mav;
+        return ModelAndViewUtil.setJsonReturn(ResponseCode.CODE_0000.getCode());
     }
 }
