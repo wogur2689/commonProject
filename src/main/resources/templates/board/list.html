@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/common/layout/default_layout}">
 <head>
-    <link th:href="@{/board/board.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/board/board.css}" type="text/css" rel="stylesheet">
 </head>
 <th:block layout:fragment="content">
     <div class="container pt-4 mw-100">
@@ -100,16 +100,16 @@
         </div>
         <div class="col-12 d-flex justify-content-center align-items-center">
             <div class="col-12 d-flex justify-content-center align-items-center">
-                <ul class="pagination" th:if="${list.size() > 1}">
+                <ul class="pagination" th:if="${list.getSize() > 1}">
                     <!-- "이전" 버튼 -->
                     <li class="page-item">
                         <a th:if="${page > 1}" th:href="@{/list(page=${page - 1})}">이전</a>
                     </li>
 
                     <!-- 페이지 번호들 -->
-                    <li th:each="i : ${#numbers.sequence(startPage, endPage)}" class="page-item">
-                        <a class="page-link" th:href="@{/list(page=${i})}" th:text="${i}" th:classappend="${i == page} ? 'active' : ''"></a>
-                    </li>
+<!--                    <li th:each="i : ${#numbers.sequence(startPage, endPage)}" class="page-item">-->
+<!--                        <a class="page-link" th:href="@{/list(page=${i})}" th:text="${i}" th:classappend="${i == page} ? 'active' : ''"></a>-->
+<!--                    </li>-->
 
                     <!-- "다음" 버튼 -->
                     <li class="page-item">

@@ -14,7 +14,7 @@ public class ExceptionController {
     //기본 Exception
     @ExceptionHandler(value = Exception.class)
     public ModelAndView unhandledException(Exception e) {
-        log.error("error : {}",e);
+        log.error("error : {}", e);
         return ModelAndViewUtil.setJsonReturn("0003");
     }
 }
