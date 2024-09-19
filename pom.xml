@@ -158,12 +158,42 @@
 <!--        </dependency>-->
     </dependencies>
 
+    <profiles>
+        <!-- local: 로컬개발 (기본 값) -->
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>local</id>
+            <properties>
+                <environment>local</environment>
+            </properties>
+        </profile>
+        <!-- dev: 개발 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>dev</environment>
+            </properties>
+        </profile>
+        <!-- prod: 운영 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <environment>prod</environment>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <profiles>
+                        <profile>${environment}</profile>
+                    </profiles>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
