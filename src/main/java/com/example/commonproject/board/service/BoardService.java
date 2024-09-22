@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +36,27 @@ public class BoardService {
 
     //list
     @Transactional(readOnly = true)
-    public Page<BoardResponseDto> boardList(int page) {
+    public Page<BoardResponseDto> boardList(int page, String sort) {
         //페이징
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.by(sort)));
         Page<Board> boardPage = boardRepository.findAll(pageable);
+
+        return boardPage.map(BoardResponseDto::toDto);
+    }
+
+    //search list
+    public Page<BoardResponseDto> searchBoardList(int page, String sort, String searchType, String searchKeyword) {
+        //페이징
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.by(sort)));
+        Page<Board> boardPage;
+
+        if ("writer".equals(searchType)) {
+            boardPage = boardRepository.findByWriterContaining(searchKeyword, pageable);
+        } else if ("title".equals(searchType)) {
+            boardPage = boardRepository.findByTitleContaining(searchKeyword, pageable);
+        } else {
+           boardPage = boardRepository.findAll(pageable);
+        }
 
         return boardPage.map(BoardResponseDto::toDto);
     }
@@ -62,4 +80,5 @@ public class BoardService {
     public void boardDelete(BoardRequestDto boardRequestDTO) {
         boardRepository.deleteById(boardRequestDTO.getId());
     }
+
 }

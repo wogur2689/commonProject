@@ -24,8 +24,18 @@ public class BoardController {
     @GetMapping("/list")
     public ModelAndView board(
             @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "id,desc") String sort,
+            @RequestParam(required = false) String searchType,
+            @RequestParam(required = false) String searchKeyword,
             ModelAndView mav) {
-        mav.addObject("list", boardService.boardList(page));
+
+        // 검색 조건이 있는 경우 처리
+        if (searchType != null && searchKeyword != null) {
+            mav.addObject("list", boardService.searchBoardList(page, sort, searchType, searchKeyword));
+        } else {
+            mav.addObject("list", boardService.boardList(page, sort));
+        }
+
         mav.setViewName("board/list");
         return mav;
     }
