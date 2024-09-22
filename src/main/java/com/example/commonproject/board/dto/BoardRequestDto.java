@@ -1,6 +1,7 @@
 package com.example.commonproject.board.dto;
 
 import com.example.commonproject.board.domain.Board;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class BoardRequestDto {
     private String title;       //제목
     private String category;    //카테고리
     private String content;     //컨텐츠
+
     private int page = 1; //페이지
     private String sort = "id, desc"; //기본 정렬
     private String searchType; //검색타입

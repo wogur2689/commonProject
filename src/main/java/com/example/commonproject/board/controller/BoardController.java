@@ -1,5 +1,6 @@
 package com.example.commonproject.board.controller;
 
+import com.example.commonproject.board.dto.BoardRequestDto;
 import com.example.commonproject.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,20 +23,21 @@ public class BoardController {
      * 리스트 화면(페이징)
      */
     @GetMapping("/list")
-    public ModelAndView board(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "id,desc") String sort,
-            @RequestParam(required = false) String searchType,
-            @RequestParam(required = false) String searchKeyword,
-            ModelAndView mav) {
-
+    public ModelAndView board(BoardRequestDto boardRequestDto, ModelAndView mav) {
         // 검색 조건이 있는 경우 처리
-        if (searchType != null && searchKeyword != null) {
-            mav.addObject("list", boardService.searchBoardList(page, sort, searchType, searchKeyword));
-        } else {
-            mav.addObject("list", boardService.boardList(page, sort));
+        if (boardRequestDto.getSearchType() != null && boardRequestDto.getSearchKeyword() != null) {
+            mav.addObject("list", boardService.searchBoardList(
+                    boardRequestDto.getPage(),
+                    boardRequestDto.getSort(),
+                    boardRequestDto.getSearchType(),
+                    boardRequestDto.getSearchKeyword()
+            ));
+
+            mav.setViewName("board/list");
+            return mav;
         }
 
+        mav.addObject("list", boardService.boardList(boardRequestDto.getPage(), boardRequestDto.getSort()));
         mav.setViewName("board/list");
         return mav;
     }
