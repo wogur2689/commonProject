@@ -24,6 +24,7 @@ public class BoardController {
      */
     @GetMapping("/list")
     public ModelAndView board(BoardRequestDto boardRequestDto, ModelAndView mav) {
+        mav.setViewName("board/list");
         // 검색 조건이 있는 경우 처리
         if (boardRequestDto.getSearchType() != null && boardRequestDto.getSearchKeyword() != null) {
             mav.addObject("list", boardService.searchBoardList(
@@ -33,12 +34,10 @@ public class BoardController {
                     boardRequestDto.getSearchKeyword()
             ));
 
-            mav.setViewName("board/list");
             return mav;
         }
 
         mav.addObject("list", boardService.boardList(boardRequestDto.getPage(), boardRequestDto.getSort()));
-        mav.setViewName("board/list");
         return mav;
     }
 
