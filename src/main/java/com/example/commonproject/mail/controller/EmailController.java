@@ -1,6 +1,8 @@
 package com.example.commonproject.mail.controller;
 
 import com.example.commonproject.mail.dto.EmailDto;
+import com.example.commonproject.mail.service.EmailService;
+import com.example.commonproject.mail.util.EmailEnum;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
