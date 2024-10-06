@@ -5,5 +5,10 @@
       layout:decorate="/common/layout/default_layout">
 <th:block layout:fragment="content">
     <h1>error페이지입니다.</h1>
+    <p>
+        요청값 : <spna th:text="#{req}"></spna>
+        code : <spna th:text="#{code}"></spna>
+        msg : <spna th:text="#{msg}"></spna>
+    </p>
 </th:block>
 </html>

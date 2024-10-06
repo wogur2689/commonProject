@@ -33,7 +33,7 @@ public class ProductController {
     public ModelAndView board(
             @RequestParam(defaultValue = "1") int page,
             ModelAndView mav) {
-        mav.addObject("list", boardService.boardList(page));
+        mav.addObject("list", boardService.boardList(page,"id, desc"));
         mav.setViewName("board/list");
         return mav;
     }
