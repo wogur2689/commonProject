@@ -44,7 +44,7 @@ public class EmailService {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("메일 전송 오류 : {} ", e.getMessage());
-            code = "0002";
+            code = "6502";
         }
         return code;
     }
@@ -69,7 +69,7 @@ public class EmailService {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("메일 전송 오류 : {} ", e.getMessage());
-            code = "0002";
+            code = "6502";
         }
         return code;
     }

@@ -1,8 +1,8 @@
 package com.example.commonproject.mail.controller;
 
+import com.example.commonproject.common.util.ResponseCode;
 import com.example.commonproject.mail.dto.EmailDto;
 import com.example.commonproject.mail.service.EmailService;
-import com.example.commonproject.mail.util.EmailEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,25 +29,25 @@ public class EmailRestController {
 
         //1. 요청값 검증
         if(result.hasErrors()) {
-            log.error("요청값 에러 {}", result.getTarget());
-            code = "0001";
+            log.error("요청값 에러 : {}", result.getTarget());
+            code = "6501";
         }
-
-        EmailDto emailDto = EmailDto.builder()
-                .toUser(request.getParameter("toUser"))
-                .ccUser(request.getParameter("ccUser"))
-                .bccUser(request.getParameter("bccUser"))
-                .fromAddress(request.getParameter("fromAddress"))
-                .subject(request.getParameter("subject"))
-                .content(request.getParameter("content"))
-                .build();
-
-        //2. 메일 전송
-        code = emailService.sendMailSimple(emailDto);
+        else {
+            EmailDto emailDto = EmailDto.builder()
+                    .toUser(request.getParameter("toUser"))
+                    .ccUser(request.getParameter("ccUser"))
+                    .bccUser(request.getParameter("bccUser"))
+                    .fromAddress(request.getParameter("fromAddress"))
+                    .subject(request.getParameter("subject"))
+                    .content(request.getParameter("content"))
+                    .build();
+            //2. 메일 전송
+            code = emailService.sendMailSimple(emailDto);
+        }
 
         //3, 결과 반환
         mav.addObject("code", code);
-        mav.addObject("msg", EmailEnum.getMessage(code));
+        mav.addObject("msg", ResponseCode.getMessage(code));
         mav.setViewName("mailResult");
         return mav;
     }
