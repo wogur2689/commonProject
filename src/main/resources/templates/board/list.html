@@ -12,31 +12,41 @@
 <!--            전체 게시글 수: <span th:text="${list.totalElements}"></span>-->
         </div>
 
-        <div class="form-group d-flex mb-2">
+        <div class="form-group d-flex mb-2 justify-content-between">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     카테고리
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <button class="dropdown-item" onclick="selectCategory('IT')">IT</button>
+                    <button class="dropdown-item" onclick="selectCategory('개발')">개발</button>
                     <button class="dropdown-item" onclick="selectCategory('디자인')">디자인</button>
+                    <button class="dropdown-item" onclick="selectCategory('인프라')">인프라</button>
+                    <button class="dropdown-item" onclick="selectCategory('데이터')">데이터</button>
+                    <button class="dropdown-item" onclick="selectCategory('인공지능')">인공지능</button>
                 </div>
             </div>
 
-<!--            <form action="/board/list" method="get" class="d-flex ms-lg-3">-->
-<!--                <label for="sort" class="mr-2">정렬 : </label>-->
-<!--                <select name="sort" id="sort" class="form-control w-50 ms-lg-1">-->
-<!--                    <option value="id,desc">작성일(최신순)</option>-->
-<!--                    <option value="id,asc">작성일(오래된순)</option>-->
-<!--                    <option value="commentCount,desc">댓글(많은순)</option>-->
-<!--                    <option value="commentCount,asc">댓글(적은순)</option>-->
-<!--                    <option value="views,desc">조회수(많은순)</option>-->
-<!--                    <option value="views,asc">조회수(적은순)</option>-->
-<!--                </select>-->
-<!--                <button type="submit" class="btn btn-primary ms-lg-1">정렬 적용</button>-->
-<!--            </form>-->
+            <form th:action="@{/board/list}" method="get" class="d-flex ms-lg-1">
+                <div class="d-flex">
+                    <select id="searchType" name="searchType" class="form-control w-75 ms-lg-1">
+                        <option value="writer" selected>작성자</option>
+                        <option value="title">제목</option>
+                    </select>
+                    <input type="text" class="ms-lg-1" id="searchKeyword" name="searchKeyword" placeholder="검색어"/>
+                    <button type="submit" class="btn btn-secondary">검색</button>
+                </div>
+            </form>
+
+            <form th:action="@{/board/list}" method="get" class="d-flex ms-lg-1">
+                <select name="sort" id="sort" class="form-control w-75 ms-lg-1">
+                    <option value="id,desc" selected>작성일(최신순)</option>
+                    <option value="id,asc">작성일(오래된순)</option>
+                </select>
+                <button type="submit" class="btn btn-primary ms-lg-1">정렬 적용</button>
+            </form>
         </div>
+
         <table class="table">
             <thead class="thead-light">
             <tr class="text-center">
@@ -72,19 +82,6 @@
         </table>
 
         <div class="form-group d-flex justify-content-between align-items-center">
-<!--            <form th:action="@{/board/list}" method="get">-->
-<!--                <div class="d-flex">-->
-<!--                    <select id="searchType" name="searchType">-->
-<!--                        <option value="writer">작성자</option>-->
-<!--                        <option value="title">제목</option>-->
-<!--                    </select>-->
-<!--                    <label for="searchKeyword" class="ms-lg-1">검색어 : </label>-->
-<!--                    <input type="text" id="searchKeyword" name="searchKeyword"/>-->
-<!--&lt;!&ndash;                    <input type="text" id="searchKeyword" name="searchKeyword" th:value="${searchKeyword}"/>&ndash;&gt;-->
-<!--                    <button type="submit" style="margin-left: 10px">검색</button>-->
-<!--                </div>-->
-<!--            </form>-->
-
             <div class="col-auto" style="padding-right: 150px">
                 <a th:href="@{/board/write}" class="btn btn-primary ml-2">글쓰기</a>
             </div>

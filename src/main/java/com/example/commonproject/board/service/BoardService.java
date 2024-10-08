@@ -47,20 +47,28 @@ public class BoardService {
     }
 
     //search list
-    public Page<BoardResponseDto> searchBoardList(int page, String sort, String searchType, String searchKeyword) {
+    public Page<BoardResponseDto> searchBoardList(Pageable pageable, String searchType, String searchKeyword) {
         //페이징
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.by(sort)));
-        Page<Board> boardPage;
+        Page<Board> boardPage = boardRepository.findAll(pageable);;
 
+        // 작성자로 검색
         if ("writer".equals(searchType)) {
             boardPage = boardRepository.findByWriterContaining(searchKeyword, pageable);
-        } else if ("title".equals(searchType)) {
-            boardPage = boardRepository.findByTitleContaining(searchKeyword, pageable);
-        } else {
-           boardPage = boardRepository.findAll(pageable);
         }
 
-        return boardPage.map(BoardResponseDto::toDto);
+        // 제목으로 검색
+        if ("title".equals(searchType)) {
+            boardPage = boardRepository.findByTitleContaining(searchKeyword, pageable);
+        }
+
+        //리스트로 변환
+        List<BoardResponseDto> boardDto = new ArrayList<>();
+        for (Board board : boardPage) {
+            BoardResponseDto result = BoardResponseDto.toDto(board);
+            boardDto.add(result);
+        }
+
+        return new PageImpl<>(boardDto, pageable, boardPage.getTotalElements());
     }
 
     //view

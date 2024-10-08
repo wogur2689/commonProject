@@ -1,6 +1,5 @@
 package com.example.commonproject.board.controller;
 
-import com.example.commonproject.board.dto.BoardRequestDto;
 import com.example.commonproject.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,23 +24,18 @@ public class BoardController {
     @GetMapping("/list")
     public ModelAndView board(
             @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-//            @RequestParam String searchType,
-//            @RequestParam String searchKeyword,
+            @RequestParam(defaultValue = "") String searchType,
+            @RequestParam(defaultValue = "") String searchKeyword,
             ModelAndView mav
     ) {
+        mav.setViewName("board/list");
         // 검색 조건이 있는 경우 처리
-//        if (searchType != null && searchKeyword != null) {
-//            mav.addObject("list", boardService.searchBoardList(
-//                    page,
-//                    sort,
-//                    searchType,
-//                    searchKeyword
-//            ));
-//            return mav;
-//        }
+        if (searchType != null && searchKeyword != null) {
+            mav.addObject("list", boardService.searchBoardList(pageable, searchType, searchKeyword));
+            return mav;
+        }
 
         mav.addObject("list", boardService.boardList(pageable));
-        mav.setViewName("board/list");
         return mav;
     }
 
