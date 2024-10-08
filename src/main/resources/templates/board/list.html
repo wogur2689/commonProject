@@ -40,43 +40,34 @@
         <table class="table">
             <thead class="thead-light">
             <tr class="text-center">
-                <th scope="col" style="width: 110px">번호</th>
-                <th scope="col" style="width: 300px">제목</th>
-                <th scope="col" style="width: 180px">작성자</th>
-<!--                <th scope="col" style="width: 150px">작성일</th>-->
-<!--                <th scope="col" style="width: 110px">댓글수</th>-->
-<!--                <th scope="col" style="width: 110px">조회수</th>-->
+                <th scope="col" style="width: 110px; background-color: #ccffff;">번호</th>
+                <th scope="col" style="width: 300px; background-color: #ccffff;">제목</th>
+                <th scope="col" style="width: 180px; background-color: #ccffff;">작성자</th>
+                <th scope="col" style="width: 150px; background-color: #ccffff;">작성일</th>
             </tr>
             </thead>
             <tbody>
-<!--                <th:block th:if="${list == null}">-->
-<!--                    현재 게시글이 없습니다.-->
-<!--                </th:block>-->
-<!--                <th:block th:unless="${list != null}">-->
+                <th:block th:if="${list.empty}">
+                    현재 게시글이 없습니다.
+                </th:block>
+                <th:block th:if="${!list.empty}">
                     <tr class="text-center" th:each="board : ${list.content}">
                         <th scope="row">
                             <span th:text="${board.id}"></span>
                         </th>
-
-                        <td>
+                        <th>
                             <a class="post-link" th:href="@{'/board/view/' + ${board.id}}">
                                 <span th:text="${board.title}"></span>
                             </a>
-                        </td>
-
-                        <td>
+                        </th>
+                        <th>
                             <span th:text="${board.writer}"></span>
-                        </td>
-        <!--                <td>-->
-        <!--                    <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span>-->
-        <!--                </td>-->
-        <!--                <td>-->
-        <!--                    <span th:text="${board.commentCount}"></span>-->
-        <!--                </td>-->
-        <!--                <td>-->
-        <!--                    <span th:text="${board.views}"></span>-->
+                        </th>
+                        <th>
+                            <span th:text="${#temporals.format(board.createAt , 'yyyy-MM-dd')}"></span>
+                        </th>
                     </tr>
-<!--                </th:block>-->
+                </th:block>
             </tbody>
         </table>
 

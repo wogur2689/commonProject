@@ -3,16 +3,19 @@ package com.example.commonproject.board.dto;
 import com.example.commonproject.board.domain.Board;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponseDto {
     private Long id;
-    private String writer;    //유저 닉네임(작성자)
-    private String category;    //카테고리
-    private String title;       //제목
-    private String content;     //컨텐츠
+    private String writer;          //유저 닉네임(작성자)
+    private String category;        //카테고리
+    private String title;           //제목
+    private String content;         //컨텐츠
+    private LocalDateTime createAt; //등록일
 
     //entity -> dto
     public static BoardResponseDto toDto(Board board) {
@@ -22,6 +25,7 @@ public class BoardResponseDto {
                 .category(board.getCategory())
                 .title(board.getTitle())
                 .content(board.getContent())
+                .createAt(board.getCreatedAt())
                 .build();
     }
 }
