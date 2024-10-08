@@ -26,17 +26,17 @@ public class ProductController {
         return mav;
     }
 
-    /**
-     * 상품 리스트 화면(페이징 적용)
-     */
-    @GetMapping("/list")
-    public ModelAndView board(
-            @RequestParam(defaultValue = "1") int page,
-            ModelAndView mav) {
-        mav.addObject("list", boardService.boardList(page,"id, desc"));
-        mav.setViewName("board/list");
-        return mav;
-    }
+//    /**
+//     * 상품 리스트 화면(페이징 적용)
+//     */
+//    @GetMapping("/list")
+//    public ModelAndView board(
+//            @RequestParam(defaultValue = "1") int page,
+//            ModelAndView mav) {
+//        mav.addObject("list", boardService.boardList(page));
+//        mav.setViewName("board/list");
+//        return mav;
+//    }
 
     /**
      * (admin) 상품 등록

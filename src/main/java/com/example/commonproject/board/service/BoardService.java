@@ -10,13 +10,11 @@ import com.example.commonproject.board.repository.BoardRepository;
 import com.example.commonproject.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +24,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private static final int size = 5; //한 페이지당 보여질 게시글 갯수
+    private static final int size = 10; //한 페이지당 보여질 게시글 갯수
 
     //create
     public BoardResponseDto boardSave(BoardRequestDto boardRequestDTO) {
@@ -36,12 +34,16 @@ public class BoardService {
 
     //list
     @Transactional(readOnly = true)
-    public Page<BoardResponseDto> boardList(int page, String sort) {
+    public Page<BoardResponseDto> boardList(Pageable pageable) {
         //페이징
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.by(sort)));
         Page<Board> boardPage = boardRepository.findAll(pageable);
+        List<BoardResponseDto> boardDto = new ArrayList<>();
+        for (Board board : boardPage) {
+            BoardResponseDto result = BoardResponseDto.toDto(board);
+            boardDto.add(result);
+        }
 
-        return boardPage.map(BoardResponseDto::toDto);
+        return new PageImpl<>(boardDto, pageable, boardPage.getTotalElements());
     }
 
     //search list

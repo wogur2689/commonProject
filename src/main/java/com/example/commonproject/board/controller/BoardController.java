@@ -4,11 +4,11 @@ import com.example.commonproject.board.dto.BoardRequestDto;
 import com.example.commonproject.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
@@ -23,21 +23,25 @@ public class BoardController {
      * 리스트 화면(페이징)
      */
     @GetMapping("/list")
-    public ModelAndView board(BoardRequestDto boardRequestDto, ModelAndView mav) {
-        mav.setViewName("board/list");
+    public ModelAndView board(
+            @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+//            @RequestParam String searchType,
+//            @RequestParam String searchKeyword,
+            ModelAndView mav
+    ) {
         // 검색 조건이 있는 경우 처리
-        if (boardRequestDto.getSearchType() != null && boardRequestDto.getSearchKeyword() != null) {
-            mav.addObject("list", boardService.searchBoardList(
-                    boardRequestDto.getPage(),
-                    boardRequestDto.getSort(),
-                    boardRequestDto.getSearchType(),
-                    boardRequestDto.getSearchKeyword()
-            ));
+//        if (searchType != null && searchKeyword != null) {
+//            mav.addObject("list", boardService.searchBoardList(
+//                    page,
+//                    sort,
+//                    searchType,
+//                    searchKeyword
+//            ));
+//            return mav;
+//        }
 
-            return mav;
-        }
-
-        mav.addObject("list", boardService.boardList(boardRequestDto.getPage(), boardRequestDto.getSort()));
+        mav.addObject("list", boardService.boardList(pageable));
+        mav.setViewName("board/list");
         return mav;
     }
 
