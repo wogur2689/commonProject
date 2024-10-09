@@ -35,7 +35,7 @@ public class CommentRestController {
      */
     @PostMapping("/readComment")
     public ModelAndView readComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        mav.addObject("comment", commentService.readComment(10));
+        //mav.addObject("comment", commentService.readComment(10));
         ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
         return mav;
     }

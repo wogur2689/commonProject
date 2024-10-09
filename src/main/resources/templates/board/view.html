@@ -5,7 +5,6 @@
       layout:decorate="~{/common/layout/default_layout}">
 <th:block layout:fragment="content">
     <div class="layout container pt-2">
-        <h1 class="text-center my-5"></h1>
         <form class="mx-5 my-3 ps-lg-2" style="max-width: 1040px;">
             <div class="form-group row pb-2">
                 <label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
@@ -44,6 +43,42 @@
             </div>
         </form>
     </div>
+    <div class="layout container pt-2">
+        <table class="table">
+            <tbody>
+            <th:block th:if="${commentList.empty}">
+                댓글이 없습니다.
+            </th:block>
+            <th:block th:if="${!commentList.empty}">
+                <tr class="text-center" th:each="comment : ${commentList.content}">
+                    <th scope="row">
+                        <span th:text="${comment.writer}"></span>
+                    </th>
+                    <th>
+                        <span th:text="${comment.content}"></span>
+                    </th>
+                    <th>
+                        <span th:text="${#temporals.format(comment.createAt , 'yyyy-MM-dd')}"></span>
+                    </th>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div class="col-auto pt-1 pb-2">
+            <div class="form-group row pb-4">
+                <label for="inputWriter" class="col-sm-2 col-form-label" ><strong>작성자</strong></label>
+                <div class="col-sm-3">
+                    <input type="text" required class="form-control w-25" id="inputCommentWriter" name="CommentWriter"/>
+                </div>
+                <label for="inputContent" class="col-sm-2 col-form-label"><strong>댓글 작성</strong></label>
+                <div class="col-sm-6">
+                    <input type="text" required class="form-control w-50" id="inputCommentContent" name="CommentContent"/>
+                </div>
+                <button class="btn btn-primary" type="button" onclick="commentCreate()">댓글달기</button>
+            </div>
+        </div>
+    </div>
+
     <script th:inline="javascript">
         let id = [[${data.id}]];
 
@@ -69,6 +104,17 @@
             } else {
                 fnUserAlt(data.msg, '', fnChangePage('/board/list'));
             }
+        }
+
+        //댓글 달기
+        function commentCreate() {
+            var param = {
+                id : id,
+                title : $("#inputTitle").val(),
+                writer : $("#inputWriter").val(),
+                content : $("#inputContent").val()
+            }
+            commonAjax('/api/board/delete', param, false, '', boardDeleteCallBack);
         }
     </script>
 </th:block>

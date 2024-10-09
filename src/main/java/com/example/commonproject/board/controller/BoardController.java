@@ -1,6 +1,7 @@
 package com.example.commonproject.board.controller;
 
 import com.example.commonproject.board.service.BoardService;
+import com.example.commonproject.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
     /**
      * 리스트 화면(페이징)
@@ -62,7 +64,10 @@ public class BoardController {
      * 게시글 보기
      */
     @GetMapping("/view/{id}")
-    public ModelAndView boardView(@PathVariable Long id, ModelAndView mav) {
+    public ModelAndView boardView(@PathVariable Long id,
+                                  @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                  ModelAndView mav) {
+        mav.addObject("commentList", commentService.readComment(pageable));
         mav.addObject("data", boardService.boardView(id));
         mav.setViewName("board/view");
         return mav;
