@@ -44,37 +44,41 @@
         </form>
     </div>
     <div class="layout container pt-2">
-        <table class="table">
-            <tbody>
-            <th:block th:if="${commentList.empty}">
-                댓글이 없습니다.
-            </th:block>
-            <th:block th:if="${!commentList.empty}">
-                <tr class="text-center" th:each="comment : ${commentList.content}">
-                    <th scope="row">
-                        <span th:text="${comment.writer}"></span>
-                    </th>
-                    <th>
-                        <span th:text="${comment.content}"></span>
-                    </th>
-                    <th>
-                        <span th:text="${#temporals.format(comment.createAt , 'yyyy-MM-dd')}"></span>
-                    </th>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
-        <div class="col-auto pt-1 pb-2">
-            <div class="form-group row pb-4">
-                <label for="inputWriter" class="col-sm-2 col-form-label" ><strong>작성자</strong></label>
-                <div class="col-sm-3">
-                    <input type="text" required class="form-control w-25" id="inputCommentWriter" name="CommentWriter"/>
+        <div class="mx-5 my-3 ps-lg-2" style="max-width: 1040px;">
+            <table class="table border-black bg-gray">
+                <tbody>
+                <th:block th:if="${commentList.empty}">
+                    <div class="text-center"><strong>댓글이 없습니다.</strong></div>
+                </th:block>
+                <th:block th:if="${!commentList.empty}">
+                    <tr class="text-center" th:each="comment : ${commentList.content}">
+                        <th scope="row">
+                            <span th:text="${comment.writer}"></span>
+                        </th>
+                        <th>
+                            <span th:text="${comment.content}"></span>
+                        </th>
+                        <th>
+                            <span th:text="${#temporals.format(comment.createAt , 'yyyy-MM-dd')}"></span>
+                        </th>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <div class="layout container pt-2">
+                <div class="form-group row justify-content-xl-between align-items-center">
+                    <div class="w-25">
+                        <label for="inputWriter" class="col-1 col-form-label w-50" ><strong>작성자</strong></label>
+                        <input type="text" required class="form-control w-50" id="inputCommentWriter" name="CommentWriter"/>
+                    </div>
+                    <div class="w-75">
+                        <label for="inputContent" class="col-1 col-form-label w-25"><strong>댓글 작성</strong></label>
+                        <input type="text" required class="form-control w-100" id="inputCommentContent" name="CommentContent"/>
+                    </div>
+                    <div class="text-end me-3">
+                        <button class="btn btn-primary w-25 mt-2 text-center" type="button" onclick="commentCreate()">댓글달기</button>
+                    </div>
                 </div>
-                <label for="inputContent" class="col-sm-2 col-form-label"><strong>댓글 작성</strong></label>
-                <div class="col-sm-6">
-                    <input type="text" required class="form-control w-50" id="inputCommentContent" name="CommentContent"/>
-                </div>
-                <button class="btn btn-primary" type="button" onclick="commentCreate()">댓글달기</button>
             </div>
         </div>
     </div>
@@ -91,9 +95,8 @@
         function boardDelete() {
             var param = {
                 id : id,
-                title : $("#inputTitle").val(),
-                writer : $("#inputWriter").val(),
-                content : $("#inputContent").val()
+                writer : $("#inputCommentWriter").val(),
+                content : $("#inputCommentContent").val()
             }
             commonAjax('/api/board/delete', param, false, '', boardDeleteCallBack);
         }
@@ -114,7 +117,15 @@
                 writer : $("#inputWriter").val(),
                 content : $("#inputContent").val()
             }
-            commonAjax('/api/board/delete', param, false, '', boardDeleteCallBack);
+            commonAjax('/api/comment/create', param, false, '', commentCreateCallBack);
+        }
+
+        function commentCreateCallBack(data) {
+            if(data.code !== '0000') {
+                fnUserAlt(data.msg);
+            } else {
+                fnUserAlt(data.msg, '', fnChangePage('/board/view/' + id));
+            }
         }
     </script>
 </th:block>

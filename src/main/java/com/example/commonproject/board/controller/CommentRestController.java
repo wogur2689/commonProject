@@ -16,14 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board")
+@RequestMapping("/api/comment")
 public class CommentRestController {
     
     private final CommentService commentService;
     /**
      * 댓글 작성
      */
-    @PostMapping("/createComment")
+    @PostMapping("/create")
     public ModelAndView createComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         commentService.createComment(commentReqDTO);
         ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
@@ -33,7 +33,7 @@ public class CommentRestController {
     /**
      * 댓글 읽기
      */
-    @PostMapping("/readComment")
+    @PostMapping("/read")
     public ModelAndView readComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         //mav.addObject("comment", commentService.readComment(10));
         ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
@@ -43,7 +43,7 @@ public class CommentRestController {
     /**
      * 댓글 수정
      */
-    @PostMapping("/updateComment")
+    @PostMapping("/update")
     public ModelAndView updateComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         commentService.updateComment(commentReqDTO);
         ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
@@ -53,7 +53,7 @@ public class CommentRestController {
     /**
      * 댓글 삭제
      */
-    @PostMapping("/deleteComment")
+    @PostMapping("/delete")
     public ModelAndView deleteComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         commentService.deleteComment(commentReqDTO);
         ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
