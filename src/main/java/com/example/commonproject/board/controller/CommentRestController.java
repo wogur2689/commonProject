@@ -26,17 +26,16 @@ public class CommentRestController {
     @PostMapping("/create")
     public ModelAndView createComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         commentService.createComment(commentReqDTO);
-        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
-        return mav;
+        return ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
     }
 
     /**
      * 댓글 읽기
      */
     @PostMapping("/read")
-    public ModelAndView readComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
-        //mav.addObject("comment", commentService.readComment(10));
-        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
+    public ModelAndView readComment(ModelAndView mav) {
+        mav.addObject("comment", commentService.readComment());
+        mav.setViewName("jsonView");
         return mav;
     }
 
@@ -46,8 +45,7 @@ public class CommentRestController {
     @PostMapping("/update")
     public ModelAndView updateComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         commentService.updateComment(commentReqDTO);
-        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
-        return mav;
+        return ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
     }
 
     /**
@@ -56,7 +54,6 @@ public class CommentRestController {
     @PostMapping("/delete")
     public ModelAndView deleteComment(@RequestBody @Valid CommentReqDto commentReqDTO, ModelAndView mav) {
         commentService.deleteComment(commentReqDTO);
-        ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
-        return mav;
+        return ModelAndViewUtil.setJsonReturn( ResponseCode.CODE_0000.getCode());
     }
 }

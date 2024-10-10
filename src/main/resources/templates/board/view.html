@@ -51,32 +51,48 @@
                     <div class="text-center"><strong>댓글이 없습니다.</strong></div>
                 </th:block>
                 <th:block th:if="${!commentList.empty}">
-                    <tr class="text-center" th:each="comment : ${commentList.content}">
-                        <th scope="row">
-                            <span th:text="${comment.writer}"></span>
-                        </th>
-                        <th>
-                            <span th:text="${comment.content}"></span>
-                        </th>
-                        <th>
-                            <span th:text="${#temporals.format(comment.createAt , 'yyyy-MM-dd')}"></span>
-                        </th>
+                    <!-- 댓글 -->
+                    <tr class="text-center" th:each="comment : ${commentList}">
+                        <!-- 댓글인 경우 -->
+                        <th:block th:if="${comment.firstCommentId == '0'}">
+                            <td>
+                                <span th:text="${comment.writer}"></span>
+                            </td>
+                        </th:block>
+                        <!-- 대댓글인 경우 -->
+                        <th:block th:if="${comment.firstCommentId !=  '0'}">
+                            <td>
+                                <span th:text="'ㄴ '+ ${comment.writer}"></span>
+                            </td>
+                        </th:block>
+                            <td>
+                                <span th:text="${comment.content}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(comment.createAt , 'yyyy-MM-dd')}"></span>
+                            </td>
+                            <!-- 대댓글 작성 버튼 -->
+                            <td>
+                                <button class="btn btn-sm btn-secondary" th:commentId="${comment.id}" th:onclick="setReplyMode(this.getAttribute('commentId'))">대댓글 작성</button>
+                            </td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
             <div class="layout container pt-2">
                 <div class="form-group row justify-content-xl-between align-items-center">
+                    <input type="hidden" id="firstCommentId" name="firstCommentId" value="0"/>
                     <div class="w-25">
-                        <label for="inputWriter" class="col-1 col-form-label w-50" ><strong>작성자</strong></label>
+                        <label for="inputCommentWriter" class="col-1 col-form-label w-50" ><strong>작성자</strong></label>
                         <input type="text" required class="form-control w-50" id="inputCommentWriter" name="CommentWriter"/>
                     </div>
                     <div class="w-75">
-                        <label for="inputContent" class="col-1 col-form-label w-25"><strong>댓글 작성</strong></label>
+                        <label for="inputCommentContent" class="col-1 col-form-label w-25"><strong>댓글 작성</strong></label>
                         <input type="text" required class="form-control w-100" id="inputCommentContent" name="CommentContent"/>
                     </div>
                     <div class="text-end me-3">
                         <button class="btn btn-primary w-25 mt-2 text-center" type="button" onclick="commentCreate()">댓글달기</button>
+                        <button class="btn btn-primary w-25 mt-2 text-center" type="button" onclick="setCommentMode()">대댓글작성모드 해제</button>
                     </div>
                 </div>
             </div>
@@ -95,8 +111,8 @@
         function boardDelete() {
             var param = {
                 id : id,
-                writer : $("#inputCommentWriter").val(),
-                content : $("#inputCommentContent").val()
+                writer : $("#inputWriter").val(),
+                content : $("#inputContent").val()
             }
             commonAjax('/api/board/delete', param, false, '', boardDeleteCallBack);
         }
@@ -109,14 +125,36 @@
             }
         }
 
+        // 댓글 작성 모드 설정
+        function setCommentMode() {
+            document.getElementById('firstCommentId').value = 0
+            fnUserAlt('댓글 작성 모드로 전환되었습니다.');
+        }
+
+        // 대댓글 작성 모드 설정
+        function setReplyMode(parentCommentId) {
+            console.log(parentCommentId);
+            // 숨겨진 필드에 대댓글의 부모 댓글 ID를 설정
+            document.getElementById('firstCommentId').value = parentCommentId;
+            fnUserAlt('대댓글 작성 모드로 전환되었습니다.');
+        }
+
         //댓글 달기
         function commentCreate() {
             var param = {
-                id : id,
-                title : $("#inputTitle").val(),
-                writer : $("#inputWriter").val(),
-                content : $("#inputContent").val()
+                firstCommentId : $("#firstCommentId").val(),
+                writer : $("#inputCommentWriter").val(),
+                content : $("#inputCommentContent").val(),
+                boardId : id
             }
+            console.log(param);
+
+            // 댓글 입력 값이 비어 있는지 체크
+            if (!param.writer || !param.content) {
+                fnUserAlt('작성자와 내용을 모두 입력해 주세요.');
+                return;
+            }
+
             commonAjax('/api/comment/create', param, false, '', commentCreateCallBack);
         }
 

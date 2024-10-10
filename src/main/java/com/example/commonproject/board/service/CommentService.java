@@ -5,7 +5,10 @@ import com.example.commonproject.board.domain.Comment;
 import com.example.commonproject.board.dto.BoardResponseDto;
 import com.example.commonproject.board.dto.CommentReqDto;
 import com.example.commonproject.board.dto.CommentResDto;
+import com.example.commonproject.board.repository.BoardRepository;
 import com.example.commonproject.board.repository.CommentRepository;
+import com.example.commonproject.common.util.ModelAndViewUtil;
+import com.example.commonproject.common.util.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,24 +28,28 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
     private static final int size = 5; //한 페이지당 보여질 게시글 갯수
     //댓글 추가
     public CommentResDto createComment(CommentReqDto commentReqDTO) {
-        Comment comment = commentRepository.save(commentReqDTO.toEntity(commentReqDTO));
+        Board board = boardRepository.findById(commentReqDTO.getBoardId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다."));
+
+        Comment comment = commentRepository.save(commentReqDTO.toEntity(commentReqDTO, board));
         return CommentResDto.toDto(comment);
     }
 
-    //댓글 가져오기(페이징)
+    //댓글 가져오기
     @Transactional(readOnly = true)
-    public Page<CommentResDto> readComment(Pageable pageable) {
-        Page<Comment> comments = commentRepository.findAll(pageable);
+    public List<CommentResDto> readComment() {
+        List<Comment> comments = commentRepository.findAll();
         List<CommentResDto> commentResDto = new ArrayList<>();
         for (Comment comment : comments) {
             CommentResDto result = CommentResDto.toDto(comment);
             commentResDto.add(result);
         }
 
-        return new PageImpl<>(commentResDto, pageable, comments.getTotalElements());
+        return commentResDto;
     }
 
     //댓글 수정

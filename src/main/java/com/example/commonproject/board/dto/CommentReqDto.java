@@ -1,5 +1,6 @@
 package com.example.commonproject.board.dto;
 
+import com.example.commonproject.board.domain.Board;
 import com.example.commonproject.board.domain.Comment;
 import lombok.*;
 
@@ -15,11 +16,12 @@ public class CommentReqDto {
     private Long boardId;
 
     //dto -> entity
-    public Comment toEntity(CommentReqDto commentReqDTO) {
+    public Comment toEntity(CommentReqDto commentReqDTO, Board board) {
         return Comment.builder()
                 .firstCommentId(commentReqDTO.getFirstCommentId())
                 .writer(commentReqDTO.getWriter())
                 .content(commentReqDTO.getContent())
+                .board(board)
                 .build();
     }
 }

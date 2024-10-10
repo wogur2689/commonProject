@@ -64,10 +64,8 @@ public class BoardController {
      * 게시글 보기
      */
     @GetMapping("/view/{id}")
-    public ModelAndView boardView(@PathVariable Long id,
-                                  @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                  ModelAndView mav) {
-        mav.addObject("commentList", commentService.readComment(pageable));
+    public ModelAndView boardView(@PathVariable Long id, ModelAndView mav) {
+        mav.addObject("commentList", commentService.readComment());
         mav.addObject("data", boardService.boardView(id));
         mav.setViewName("board/view");
         return mav;
