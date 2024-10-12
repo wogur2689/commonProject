@@ -30,16 +30,6 @@ public class CommentRestController {
     }
 
     /**
-     * 댓글 읽기
-     */
-    @PostMapping("/read")
-    public ModelAndView readComment(ModelAndView mav) {
-        mav.addObject("comment", commentService.readComment());
-        mav.setViewName("jsonView");
-        return mav;
-    }
-
-    /**
      * 댓글 수정
      */
     @PostMapping("/update")

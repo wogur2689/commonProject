@@ -65,7 +65,7 @@ public class BoardController {
      */
     @GetMapping("/view/{id}")
     public ModelAndView boardView(@PathVariable Long id, ModelAndView mav) {
-        mav.addObject("commentList", commentService.readComment());
+        mav.addObject("commentList", commentService.readComment(id));
         mav.addObject("data", boardService.boardView(id));
         mav.setViewName("board/view");
         return mav;

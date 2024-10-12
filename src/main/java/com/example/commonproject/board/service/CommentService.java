@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -41,12 +42,16 @@ public class CommentService {
 
     //댓글 가져오기
     @Transactional(readOnly = true)
-    public List<CommentResDto> readComment() {
+    public List<CommentResDto> readComment(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow();
+
         List<Comment> comments = commentRepository.findAll();
         List<CommentResDto> commentResDto = new ArrayList<>();
         for (Comment comment : comments) {
-            CommentResDto result = CommentResDto.toDto(comment);
-            commentResDto.add(result);
+            if (board.getId() == comment.getBoard().getId()) {
+                CommentResDto result = CommentResDto.toDto(comment);
+                commentResDto.add(result);
+            }
         }
 
         return commentResDto;
