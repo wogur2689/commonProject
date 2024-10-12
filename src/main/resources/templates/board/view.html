@@ -50,26 +50,33 @@
                 <th:block th:if="${commentList.empty}">
                     <div class="text-center"><strong>댓글이 없습니다.</strong></div>
                 </th:block>
-                <th:block th:if="${!commentList.empty}">
+                <th:block th:if="${!commentList.empty}" th:each="comment : ${commentList}">
                     <!-- 댓글 -->
-                    <tr class="text-center" th:each="comment : ${commentList}">
-                        <!-- 댓글인 경우 -->
-                        <th:block th:if="${comment.firstCommentId == '0'}">
+                    <tr class="text-center" th:if="${comment.firstCommentId == 0}">
                             <td>
                                 <span th:text="${comment.writer}"></span>
                             </td>
-                        </th:block>
-                        <!-- 대댓글인 경우 -->
-                        <th:block th:if="${comment.firstCommentId !=  '0'}">
-                            <td>
-                                <span th:text="'ㄴ '+ ${comment.writer}"></span>
-                            </td>
-                        </th:block>
                             <td>
                                 <span th:text="${comment.content}"></span>
                             </td>
                             <td>
                                 <span th:text="${#temporals.format(comment.createAt , 'yyyy-MM-dd')}"></span>
+                            </td>
+                            <!-- 대댓글 작성 버튼 -->
+                            <td>
+                                <button class="btn btn-sm btn-secondary" th:commentId="${comment.id}" th:onclick="setReplyMode(this.getAttribute('commentId'))">대댓글 작성</button>
+                            </td>
+                    </tr>
+                    <!-- 대댓글 -->
+                    <tr class="text-center" th:each="childComment : ${commentList}" th:if="${comment.id == childComment.firstCommentId}">
+                            <td>
+                                <span th:text="'ㄴ  ' + ${childComment.writer}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${childComment.content}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(childComment.createAt , 'yyyy-MM-dd')}"></span>
                             </td>
                             <!-- 대댓글 작성 버튼 -->
                             <td>

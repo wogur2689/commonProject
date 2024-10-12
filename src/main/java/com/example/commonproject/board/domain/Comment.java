@@ -20,7 +20,7 @@ public class Comment extends BaseEntity {
     private Long id;
 
     @Column
-    private String firstCommentId; //첫 댓글 id
+    private Long firstCommentId; //첫 댓글 id
 
     @Column(nullable = false)
     private String writer; //작성자

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class CommentResDto {
 
     private Long id;
-    private String firstCommentId;  //첫 댓글 id (2023-10-31)
+    private Long firstCommentId;    //첫 댓글 id (2023-10-31)
     private String writer;          //작성자
     private String content;         //내용
     private Long boardId;           //게시글 id

@@ -10,7 +10,7 @@ import lombok.*;
 public class CommentReqDto {
 
     private Long id;
-    private String firstCommentId; //첫 댓글 id
+    private Long firstCommentId; //첫 댓글 id
     private String writer;
     private String content;
     private Long boardId;
