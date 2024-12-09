@@ -8,11 +8,11 @@ import java.util.Date;
 
 public class DateUtil {
     /**
-     * 날짜 유효성 검사 yyyy-mm-dd
+     * 날짜 유효성 검사
      */
-    public static boolean checkDate(String date) {
+    public static boolean checkDate(String date, String pattern) {
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             simpleDateFormat.setLenient(false);
             simpleDateFormat.parse(date);
             return true;
@@ -25,8 +25,7 @@ public class DateUtil {
      * String To Date yyyy-MM-dd
      */
     public static Date convertStringToDate(String utilDate) throws ParseException {
-        Date sf = new SimpleDateFormat("yyyy-MM-dd").parse(utilDate);
-        return sf;
+        return new SimpleDateFormat("yyyy-MM-dd").parse(utilDate);
     }
 
     /**
@@ -43,13 +42,5 @@ public class DateUtil {
     public static LocalDateTime convertStringToLocalDateTime(String textDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         return LocalDateTime.parse(textDate, formatter);
-    }
-
-    /*
-     * yyyy mm dd hh:mm:ss
-     */
-    public static String convertLocalDateTimeToString(LocalDateTime ldt) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return ldt.format(formatter);
     }
 }
