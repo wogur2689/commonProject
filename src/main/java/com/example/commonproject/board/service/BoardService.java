@@ -49,7 +49,7 @@ public class BoardService {
     //search list
     public Page<BoardResponseDto> searchBoardList(Pageable pageable, String searchType, String searchKeyword) {
         //페이징
-        Page<Board> boardPage = boardRepository.findAll(pageable);;
+        Page<Board> boardPage = boardRepository.findAll(pageable);
 
         // 작성자로 검색
         if ("writer".equals(searchType)) {

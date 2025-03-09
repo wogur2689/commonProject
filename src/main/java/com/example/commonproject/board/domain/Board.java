@@ -35,7 +35,6 @@ public class Board extends BaseEntity {
 
     //변경감지(수정)
     public void BoardUpdate(BoardRequestDto boardRequestDTO) {
-        this.writer = boardRequestDTO.getWriter();
         this.category = boardRequestDTO.getCategory();
         this.title = boardRequestDTO.getTitle();
         this.content = boardRequestDTO.getContent();
