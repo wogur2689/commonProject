@@ -183,6 +183,29 @@
             <type>pom</type>
             <scope>import</scope>
         </dependency>
+
+        <!-- QueryDSL Core -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <!-- QueryDSL JPA -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <!-- QueryDSL JPA Annotation Processor -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <profiles>
