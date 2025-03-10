@@ -61,7 +61,7 @@ public class BoardService {
             boardPage = boardRepository.findByTitleContaining(searchKeyword, pageable);
         }
 
-        //리스트로 변환
+        //리스트로 변환dd
         List<BoardResponseDto> boardDto = new ArrayList<>();
         for (Board board : boardPage) {
             BoardResponseDto result = BoardResponseDto.toDto(board);
