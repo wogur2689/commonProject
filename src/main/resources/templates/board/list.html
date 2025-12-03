@@ -91,29 +91,58 @@
             <div class="col-12 d-flex justify-content-center align-items-center">
                 <ul class="pagination"
                     th:with="
-                        pageNumber = ${list.pageable.pageNumber},
-                        pageSize = ${list.pageable.pageSize},
-                        totalPages = ${list.totalPages},
-                        startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
-                        tempEndPage = ${startPage + pageSize - 1},
-                        endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+        pageNumber=${list.pageable.pageNumber},
+        totalPages=${list.totalPages},
+        blockSize=5,
+        startPage=${(pageNumber / blockSize) * blockSize + 1},
+        endPage=${(startPage + blockSize - 1 < totalPages) ? startPage + blockSize - 1 : totalPages}">
 
-                    <li th:classappend="${list.first} ? 'disabled'" class="page-item">
-                        <a class="page-link" th:href="${list.first} ? '#' : @{/(page=${pageNumber - 1})}">
-                            <span aria-hidden="true">&lt;</span>
+                    <!-- 이전 -->
+                    <li class="page-item" th:classappend="${list.first} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="${list.first} ? '#' :
+                    @{/board/list(
+                        page=${pageNumber - 1},
+                        searchType=${searchType},
+                        searchKeyword=${searchKeyword},
+                        sort=${sort}
+                    )}">
+                            &lt;
                         </a>
                     </li>
 
-                    <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-                        <a th:text="${page}" class="page-link" th:href="@{/(page=${page - 1})}"></a>
-                    </li>
+                    <!-- 페이지 번호 -->
+                    <li class="page-item"
+                        th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                        th:classappend="${page == pageNumber + 1} ? 'active'">
 
-                    <li th:classappend="${list.last} ? 'disabled'" class="page-item">
-                        <a class="page-link" th:href="${list.last} ? '#' : @{/(page=${pageNumber + 1})}" aria-label="Next">
-                            <span aria-hidden="true">&gt;</span>
+                        <a class="page-link"
+                           th:text="${page}"
+                           th:href="@{/board/list(
+                page=${page - 1},
+                searchType=${searchType},
+                searchKeyword=${searchKeyword},
+                sort=${sort}
+            )}">
                         </a>
                     </li>
+
+                    <!-- 다음 -->
+                    <li class="page-item" th:classappend="${list.last} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="${list.last} ? '#' :
+                    @{/board/list(
+                        page=${pageNumber + 1},
+                        searchType=${searchType},
+                        searchKeyword=${searchKeyword},
+                        sort=${sort}
+                    )}">
+                            &gt;
+                        </a>
+                    </li>
+
                 </ul>
+
             </div>
         </div>
     </div>

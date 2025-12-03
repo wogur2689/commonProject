@@ -37,13 +37,8 @@ public class BoardService {
     public Page<BoardResponseDto> boardList(Pageable pageable) {
         //페이징
         Page<Board> boardPage = boardRepository.findAll(pageable);
-        List<BoardResponseDto> boardDto = new ArrayList<>();
-        for (Board board : boardPage) {
-            BoardResponseDto result = BoardResponseDto.toDto(board);
-            boardDto.add(result);
-        }
 
-        return new PageImpl<>(boardDto, pageable, boardPage.getTotalElements());
+        return boardPage.map(BoardResponseDto::toDto);
     }
 
     //search list
@@ -61,14 +56,8 @@ public class BoardService {
             boardPage = boardRepository.findByTitleContaining(searchKeyword, pageable);
         }
 
-        //리스트로 변환dd
-        List<BoardResponseDto> boardDto = new ArrayList<>();
-        for (Board board : boardPage) {
-            BoardResponseDto result = BoardResponseDto.toDto(board);
-            boardDto.add(result);
-        }
-
-        return new PageImpl<>(boardDto, pageable, boardPage.getTotalElements());
+        //리스트로 변환
+        return boardPage.map(BoardResponseDto::toDto);
     }
 
     //view

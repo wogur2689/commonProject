@@ -31,13 +31,14 @@ public class BoardController {
             ModelAndView mav
     ) {
         mav.setViewName("board/list");
-        // 검색 조건이 있는 경우 처리
-        if (searchType != null && searchKeyword != null) {
+
+        // 검색 조건이 있을 때만 검색 실행
+        if (!searchType.isEmpty() && !searchKeyword.isEmpty()) {
             mav.addObject("list", boardService.searchBoardList(pageable, searchType, searchKeyword));
-            return mav;
+        } else {
+            mav.addObject("list", boardService.boardList(pageable));
         }
 
-        mav.addObject("list", boardService.boardList(pageable));
         return mav;
     }
 
