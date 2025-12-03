@@ -67,7 +67,11 @@
         }
 
         function boardCreateCallBack(data) {
-            fnUserAlt(data.msg);
+            fnUserAlt(data.msg, "안내", moveMainPage);
+        }
+
+        function moveMainPage() {
+            fnChangePage("/board/list");
         }
     </script>
 </th:block>

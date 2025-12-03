@@ -350,54 +350,38 @@ function fnUserCfmAlt(msg, title, callback) {
 /***
  * 사용자 얼럿
  */
-function fnUserAlt(msg, title, callback) {
+function fnUserAlt(msg, title = "알림", callback) {
+    const modalId = "userAlertModal_" + Date.now();
 
-    var innerTitle = "";
-    var titleClass = "";
-
-    if (nvl(title, '') != '') {
-        innerTitle = title;
-    } else {
-        titleClass = "no_title";
-    }
-
-    var today 			= Math.floor(+ new Date() / 1000);
-    var alertId			= "alertModal_" + today;
-    var closeId			= "alertModal_close_" + today;
-    var confirm 		= alertId + "_Confirm";
-
-    var html = "";
-    html += "<div id='" + alertId + "' class='popup-bg' style='z-index:9999;'>";
-    html += "<div id='' class='common-popup'>";
-    html += 	" <div class='scroll'>";
-    html += 		"<p>" + msg + "</p>";
-    html += 	"</div>";
-    html += 	"<div class='common-popup-btn'>";
-    html += 		"<button class='mint' type='button' id='" + confirm + "'>확인</button>";
-    html += 	"</div>";
-    html += "</div>";
-    html += "</div>";
+    const html = `
+    <div class="modal fade" id="${modalId}" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+          <div class="modal-header">
+            <h5 class="modal-title">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body text-center">
+            ${msg}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="${modalId}_ok">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
 
     $("body").append(html);
 
-    $("body").css({overflow:'hidden'}).bind('touchmove', function(e){e.preventDefault()});
-    $("#" + alertId).show();
+    const modal = new bootstrap.Modal(document.getElementById(modalId));
+    modal.show();
 
-    $('#' + confirm).off().on('click', function() {
-        $("body").css({overflow:'scroll'}).unbind('touchmove');
-        $("#" + alertId).hide();
-        $("#" + alertId).remove();
-        if (typeof callback == 'function') {
-            callback();
-        }
+    $(`#${modalId}_ok`).on("click", () => {
+        modal.hide();
+        if (callback) callback();
     });
 
-    $('#' + closeId).off().on('click', function() {
-        $("body").css({overflow:'scroll'}).unbind('touchmove');
-        $("#" + alertId).hide();
-        $("#" + alertId).remove();
-        if (typeof callback == 'function') {
-            callback();
-        }
+    $(`#${modalId}`).on("hidden.bs.modal", () => {
+        $(`#${modalId}`).remove();
     });
 }
