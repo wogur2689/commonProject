@@ -290,60 +290,45 @@ function commonGetAjax(urls, param, isSync, targetObj, functionToCallBack , succ
 /***
  * 사용자 확인얼럿
  */
-function fnUserCfmAlt(msg, title, callback) {
+function fnUserCfmAlt(msg, title = "알림", callback) {
+    const modalId = "userAlertModal_" + Date.now();
 
-    var innerTitle = "";
-    var titleClass = "";
-
-    if (nvl(title, '') != '') {
-        innerTitle = title;
-    } else {
-        titleClass = "no_title";
-    }
-
-    var today 			= Math.floor(+ new Date() / 1000);
-    var confirmId		= "confirmModal_" + today;
-    var closeId			= "confirmModal_close_" + today;
-    var confirm 		= confirmId + "_Confirm";
-    var close 			= confirmId + "_Close";
-
-    var html = "";
-    html += "<div id='" + confirmId + "' class='modal' style='position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.5); z-index:9999;'>";
-    html += "<div id='' class='common-popup' style='z-index:9999;'>";
-    html += 	" <div class='scroll'>";
-
-    html += 		"<p>" + msg + "</p>";
-    html += 		"<div class='common-popup-btn'>";
-    html += 			"<button class='white' type='button' id='" + close + "'>취소</button>";
-    html += 			"<button class='mint' type='button' id='" + confirm + "'>확인</button>";
-    html += 		"</div>";
-    html += 	"</div>";
-    html += "</div>";
-    html += "</div>";
+    const html = `
+    <div class="modal fade" id="${modalId}" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+          <div class="modal-header">
+            <h5 class="modal-title">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body text-center">
+            ${msg}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="${modalId}_ok">확인</button>
+            <button type="button" class="btn btn-primary" id="${modalId}_no">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
 
     $("body").append(html);
 
-    $("body").css({overflow:'hidden'}).bind('touchmove', function(e){e.preventDefault()});
-    $("#" + confirmId).show();
+    const modal = new bootstrap.Modal(document.getElementById(modalId));
+    modal.show();
 
-    $('#' + close).off().on('click', function() {
-        $("body").css({overflow:'scroll'}).unbind('touchmove');
-        $("#" + confirmId).hide();
-        $("#" + confirmId).remove();
-        callback(false);
+    $(`#${modalId}_ok`).on("click", () => {
+        modal.hide();
+        if (callback) callback();
     });
 
-    $('#' + confirm).off().on('click', function() {
-        $("body").css({overflow:'scroll'}).unbind('touchmove');
-        $("#" + confirmId).hide();
-        $("#" + confirmId).remove();
-        callback(true);
+    $(`#${modalId}_no`).on("click", () => {
+        modal.hide();
+        if (callback) callback();
     });
 
-    $('#' + closeId).off().on('click', function() {
-        $("body").css({overflow:'scroll'}).unbind('touchmove');
-        $("#" + confirmId).hide();
-        $("#" + confirmId).remove();
+    $(`#${modalId}`).on("hidden.bs.modal", () => {
+        $(`#${modalId}`).remove();
     });
 }
 
